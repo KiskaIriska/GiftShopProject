@@ -22,28 +22,28 @@ namespace GiftShopListImplement.Implements
             {
              
             // требуется дополнительно получить список компонентов для изделия и их количество
-            List<GiftSetComponentViewModel> productComponents = new List<GiftSetComponentViewModel>();
-                for (int j = 0; j < source.ProductComponents.Count; ++j)
+            List<GiftSetComponentViewModel> giftSetComponents = new List<GiftSetComponentViewModel>();
+                for (int j = 0; j < source.GiftSetComponents.Count; ++j)
                 {
-                    if (source.ProductComponents[j].GiftSetId == source.GiftSets[i].Id)
+                    if (source.GiftSetComponents[j].GiftSetId == source.GiftSets[i].Id)
                     {
                         string componentName = string.Empty;
                         for (int k = 0; k < source.Components.Count; ++k)
                         {
-                            if (source.ProductComponents[j].ComponentId ==
+                            if (source.GiftSetComponents[j].ComponentId ==
                            source.Components[k].Id)
                             {
                                 componentName = source.Components[k].ComponentName;
                                 break;
                             }
                         }
-                        productComponents.Add(new GiftSetComponentViewModel
+                        giftSetComponents.Add(new GiftSetComponentViewModel
                         {
-                            Id = source.ProductComponents[j].Id,
-                            GiftSetId = source.ProductComponents[j].GiftSetId,
-                            ComponentId = source.ProductComponents[j].ComponentId,
+                            Id = source.GiftSetComponents[j].Id,
+                            GiftSetId = source.GiftSetComponents[j].GiftSetId,
+                            ComponentId = source.GiftSetComponents[j].ComponentId,
                             ComponentName = componentName,
-                            Count = source.ProductComponents[j].Count
+                            Count = source.GiftSetComponents[j].Count
                         });
                     }
                 }
@@ -52,7 +52,7 @@ namespace GiftShopListImplement.Implements
                     Id = source.GiftSets[i].Id,
                     GiftSetName = source.GiftSets[i].GiftSetName,
                     Price = source.GiftSets[i].Price,
-                    GiftSetComponents = productComponents
+                    GiftSetComponents = giftSetComponents
                 });
             }
             return result;
@@ -62,29 +62,29 @@ namespace GiftShopListImplement.Implements
             for (int i = 0; i < source.GiftSets.Count; ++i)
             {
                 // требуется дополнительно получить список компонентов для изделия и их количество
-            List<GiftSetComponentViewModel> productComponents = new List<GiftSetComponentViewModel>();
-                for (int j = 0; j < source.ProductComponents.Count; ++j)
+            List<GiftSetComponentViewModel> giftSetComponents = new List<GiftSetComponentViewModel>();
+                for (int j = 0; j < source.GiftSetComponents.Count; ++j)
                 {
-                    if (source.ProductComponents[j].GiftSetId == source.GiftSets[i].Id)
+                    if (source.GiftSetComponents[j].GiftSetId == source.GiftSets[i].Id)
                     {
                         string componentName = string.Empty;
                         for (int k = 0; k < source.Components.Count; ++k)
                         {
-                            if (source.ProductComponents[j].ComponentId ==
+                            if (source.GiftSetComponents[j].ComponentId ==
                            source.Components[k].Id)
                             {
                                 componentName = source.Components[k].ComponentName;
                                 break;
                             }
                         }
-                        productComponents.Add(new GiftSetComponentViewModel
+                        giftSetComponents.Add(new GiftSetComponentViewModel
                         {
-                            Id = source.ProductComponents[j].Id,
+                            Id = source.GiftSetComponents[j].Id,
 
-                            GiftSetId = source.ProductComponents[j].GiftSetId,
-                            ComponentId = source.ProductComponents[j].ComponentId,
+                            GiftSetId = source.GiftSetComponents[j].GiftSetId,
+                            ComponentId = source.GiftSetComponents[j].ComponentId,
                             ComponentName = componentName,
-                            Count = source.ProductComponents[j].Count
+                            Count = source.GiftSetComponents[j].Count
                         });
                     }
                 }
@@ -95,7 +95,7 @@ namespace GiftShopListImplement.Implements
                         Id = source.GiftSets[i].Id,
                         GiftSetName = source.GiftSets[i].GiftSetName,
                         Price = source.GiftSets[i].Price,
-                        GiftSetComponents = productComponents
+                        GiftSetComponents = giftSetComponents
                     };
                 }
             }
@@ -123,37 +123,37 @@ namespace GiftShopListImplement.Implements
             });
             // компоненты для изделия
             int maxPCId = 0;
-            for (int i = 0; i < source.ProductComponents.Count; ++i)
+            for (int i = 0; i < source.GiftSetComponents.Count; ++i)
             {
-                if (source.ProductComponents[i].Id > maxPCId)
+                if (source.GiftSetComponents[i].Id > maxPCId)
                 {
-                    maxPCId = source.ProductComponents[i].Id;
+                    maxPCId = source.GiftSetComponents[i].Id;
                 }
             }
             // убираем дубли по компонентам
-            for (int i = 0; i < model.ProductComponents.Count; ++i)
+            for (int i = 0; i < model.GiftSetComponents.Count; ++i)
             {
-                for (int j = 1; j < model.ProductComponents.Count; ++j)
+                for (int j = 1; j < model.GiftSetComponents.Count; ++j)
                 {
-                    if (model.ProductComponents[i].ComponentId ==
-                    model.ProductComponents[j].ComponentId)
+                    if (model.GiftSetComponents[i].ComponentId ==
+                    model.GiftSetComponents[j].ComponentId)
                     {
-                        model.ProductComponents[i].Count +=
-                        model.ProductComponents[j].Count;
-                        model.ProductComponents.RemoveAt(j--);
+                        model.GiftSetComponents[i].Count +=
+                        model.GiftSetComponents[j].Count;
+                        model.GiftSetComponents.RemoveAt(j--);
                     }
                 }
                
             }
             // добавляем компоненты
-            for (int i = 0; i < model.ProductComponents.Count; ++i)
+            for (int i = 0; i < model.GiftSetComponents.Count; ++i)
             {
-                source.ProductComponents.Add(new GiftSetComponent
+                source.GiftSetComponents.Add(new GiftSetComponent
                 {
                     Id = ++maxPCId,
                     GiftSetId = maxId + 1,
-                    ComponentId = model.ProductComponents[i].ComponentId,
-                    Count = model.ProductComponents[i].Count
+                    ComponentId = model.GiftSetComponents[i].ComponentId,
+                    Count = model.GiftSetComponents[i].Count
                 });
             }
         }
@@ -179,27 +179,27 @@ namespace GiftShopListImplement.Implements
             source.GiftSets[index].GiftSetName = model.GiftSetName;
             source.GiftSets[index].Price = model.Price;
             int maxPCId = 0;
-            for (int i = 0; i < source.ProductComponents.Count; ++i)
+            for (int i = 0; i < source.GiftSetComponents.Count; ++i)
             {
-                if (source.ProductComponents[i].Id > maxPCId)
+                if (source.GiftSetComponents[i].Id > maxPCId)
                 {
-                    maxPCId = source.ProductComponents[i].Id;
+                    maxPCId = source.GiftSetComponents[i].Id;
                 }
             }
             // обновляем существуюущие компоненты
-            for (int i = 0; i < source.ProductComponents.Count; ++i)
+            for (int i = 0; i < source.GiftSetComponents.Count; ++i)
             {
-                if (source.ProductComponents[i].GiftSetId == model.Id)
+                if (source.GiftSetComponents[i].GiftSetId == model.Id)
                 {
                     bool flag = true;
-                    for (int j = 0; j < model.ProductComponents.Count; ++j)
+                    for (int j = 0; j < model.GiftSetComponents.Count; ++j)
                     {
                         // если встретили, то изменяем количество
-                        if (source.ProductComponents[i].Id ==
-                        model.ProductComponents[j].Id)
+                        if (source.GiftSetComponents[i].Id ==
+                        model.GiftSetComponents[j].Id)
                         {
-                            source.ProductComponents[i].Count =
-                           model.ProductComponents[j].Count;
+                            source.GiftSetComponents[i].Count =
+                           model.GiftSetComponents[j].Count;
                             flag = false;
                             break;
                         }
@@ -207,38 +207,38 @@ namespace GiftShopListImplement.Implements
                     // если не встретили, то удаляем
                     if (flag)
                     {
-                     source.ProductComponents.RemoveAt(i--);
+                     source.GiftSetComponents.RemoveAt(i--);
                     }
                 }
             }
             // новые записи
-            for (int i = 0; i < model.ProductComponents.Count; ++i)
+            for (int i = 0; i < model.GiftSetComponents.Count; ++i)
             {
-                if (model.ProductComponents[i].Id == 0)
+                if (model.GiftSetComponents[i].Id == 0)
                 {
                     // ищем дубли
-                    for (int j = 0; j < source.ProductComponents.Count; ++j)
+                    for (int j = 0; j < source.GiftSetComponents.Count; ++j)
                     {
-                        if (source.ProductComponents[j].GiftSetId == model.Id &&
-                        source.ProductComponents[j].ComponentId ==
-                       model.ProductComponents[i].ComponentId)
+                        if (source.GiftSetComponents[j].GiftSetId == model.Id &&
+                        source.GiftSetComponents[j].ComponentId ==
+                       model.GiftSetComponents[i].ComponentId)
                         {
-                            source.ProductComponents[j].Count +=
-                           model.ProductComponents[i].Count;
-                            model.ProductComponents[i].Id =
-                           source.ProductComponents[j].Id;
+                            source.GiftSetComponents[j].Count +=
+                           model.GiftSetComponents[i].Count;
+                            model.GiftSetComponents[i].Id =
+                           source.GiftSetComponents[j].Id;
                             break;
                         }
                     }
                     // если не нашли дубли, то новая запись
-                    if (model.ProductComponents[i].Id == 0)
+                    if (model.GiftSetComponents[i].Id == 0)
                     {
-                        source.ProductComponents.Add(new GiftSetComponent
+                        source.GiftSetComponents.Add(new GiftSetComponent
                         {
                             Id = ++maxPCId,
                             GiftSetId = model.Id,
-                            ComponentId = model.ProductComponents[i].ComponentId,
-                            Count = model.ProductComponents[i].Count
+                            ComponentId = model.GiftSetComponents[i].ComponentId,
+                            Count = model.GiftSetComponents[i].Count
                         });
                     }
                 }
@@ -247,11 +247,11 @@ namespace GiftShopListImplement.Implements
         public void DelElement(int id)
         {
             // удаляем записи по компонентам при удалении изделия
-            for (int i = 0; i < source.ProductComponents.Count; ++i)
+            for (int i = 0; i < source.GiftSetComponents.Count; ++i)
             {
-                if (source.ProductComponents[i].GiftSetId == id)
+                if (source.GiftSetComponents[i].GiftSetId == id)
                 {
-                    source.ProductComponents.RemoveAt(i--);
+                    source.GiftSetComponents.RemoveAt(i--);
                 }
             }
             for (int i = 0; i < source.GiftSets.Count; ++i)

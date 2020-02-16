@@ -178,7 +178,7 @@ namespace GiftShopView
                         Id = id.Value,
                         GiftSetName = textBoxName.Text,
                         Price = Convert.ToDecimal(textBoxPrice.Text),
-                        ProductComponents = productComponentBM
+                        GiftSetComponents = productComponentBM
                     });
                 }
                 else
@@ -187,7 +187,7 @@ namespace GiftShopView
                     {
                         GiftSetName = textBoxName.Text,
                         Price = Convert.ToDecimal(textBoxPrice.Text),
-                        ProductComponents = productComponentBM
+                        GiftSetComponents = productComponentBM
                     });
                 }
                 MessageBox.Show("Сохранение прошло успешно", "Сообщение",

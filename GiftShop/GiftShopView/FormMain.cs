@@ -46,7 +46,8 @@ namespace GiftShopView
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
                MessageBoxIcon.Error);
             }
-        }
+        }
+
 
         private void КомпонентыToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -82,7 +83,8 @@ namespace GiftShopView
                     MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
                    MessageBoxIcon.Error);
                 }
-            }
+            }
+
         }
 
         private void ButtonOrderReady_Click(object sender, EventArgs e)
@@ -118,7 +120,8 @@ namespace GiftShopView
                     MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
                    MessageBoxIcon.Error);
                 }
-            }
+            }
+
         }
 
         private void ButtonRef_Click(object sender, EventArgs e)

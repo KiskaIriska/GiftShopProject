@@ -9,6 +9,6 @@ namespace GiftShopBusinessLogic.BingingModels
         public int Id { get; set; }
         public string GiftSetName { get; set; }
         public decimal Price { get; set; }
-        public List<GiftSetComponentBindingModel> ProductComponents { get; set; }
+        public List<GiftSetComponentBindingModel> GiftSetComponents { get; set; }
     }
 }
