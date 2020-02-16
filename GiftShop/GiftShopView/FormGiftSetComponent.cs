@@ -24,7 +24,7 @@ namespace GiftShopView
             InitializeComponent();
             this.logic = logic;
         }
-        private void FormProductComponent_Load(object sender, EventArgs e)
+        private void FormGiftSetComponent_Load(object sender, EventArgs e)
         {
             try
             {

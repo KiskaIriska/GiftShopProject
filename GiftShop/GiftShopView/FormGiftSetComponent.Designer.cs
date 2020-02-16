@@ -81,6 +81,7 @@
             this.comboBoxComponent.Name = "comboBoxComponent";
             this.comboBoxComponent.Size = new System.Drawing.Size(215, 21);
             this.comboBoxComponent.TabIndex = 4;
+            this.Load += new System.EventHandler(this.FormGiftSetComponent_Load);
             // 
             // textBoxCount
             // 

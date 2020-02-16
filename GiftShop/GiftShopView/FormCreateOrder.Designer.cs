@@ -81,7 +81,7 @@
             this.buttonSave.TabIndex = 4;
             this.buttonSave.Text = "Сохранить";
             this.buttonSave.UseVisualStyleBackColor = true;
-            this.buttonSave.Click += new System.EventHandler(this.ButtonSave_Click);
+            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
             // buttonCancel
             // 
@@ -91,7 +91,7 @@
             this.buttonCancel.TabIndex = 5;
             this.buttonCancel.Text = "Отмена";
             this.buttonCancel.UseVisualStyleBackColor = true;
-            this.buttonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
             // textBoxCount
             // 
@@ -99,12 +99,12 @@
             this.textBoxCount.Name = "textBoxCount";
             this.textBoxCount.Size = new System.Drawing.Size(175, 20);
             this.textBoxCount.TabIndex = 6;
+            this.textBoxCount.TextChanged += new System.EventHandler(this.textBoxCount_TextChanged);
             // 
             // textBoxSum
             // 
             this.textBoxSum.Location = new System.Drawing.Point(182, 94);
             this.textBoxSum.Name = "textBoxSum";
-            this.textBoxSum.ReadOnly = true;
             this.textBoxSum.Size = new System.Drawing.Size(175, 20);
             this.textBoxSum.TabIndex = 7;
             // 
@@ -123,6 +123,7 @@
             this.Controls.Add(this.comboBoxGiftSet);
             this.Name = "FormCreateOrder";
             this.Text = "FormCreateOrder";
+            this.Load += new System.EventHandler(this.FormCreateOrder_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

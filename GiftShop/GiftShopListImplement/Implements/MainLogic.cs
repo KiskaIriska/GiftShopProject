@@ -20,12 +20,12 @@ namespace GiftShopListImplement.Implements
             List<OrderViewModel> result = new List<OrderViewModel>();
             for (int i = 0; i < source.Orders.Count; ++i)
             {
-                string productName = string.Empty;
+                string giftSetName = string.Empty;
                 for (int j = 0; j < source.GiftSets.Count; ++j)
                 {
                     if (source.GiftSets[j].Id == source.Orders[i].GiftSetId)
                     {
-                        productName = source.GiftSets[j].GiftSetName;
+                        giftSetName = source.GiftSets[j].GiftSetName;
                         break;
                     }
                 }
@@ -33,7 +33,7 @@ namespace GiftShopListImplement.Implements
                 {
                     Id = source.Orders[i].Id,
                     GiftSetId = source.Orders[i].GiftSetId,
-                    GiftSetName = productName,
+                    GiftSetName = giftSetName,
                     Count = source.Orders[i].Count,
                     Sum = source.Orders[i].Sum,
                     DateCreate = source.Orders[i].DateCreate,
@@ -109,7 +109,25 @@ namespace GiftShopListImplement.Implements
         }
         public void PayOrder(OrderBindingModel model)
         {
-            // как же его реализовать…
+            int index = -1;
+            for (int i = 0; i < source.Orders.Count; ++i)
+            {
+                if (source.Orders[i].Id == model.Id)
+                {
+                    index = i;
+                    break;
+                }
+            }
+            if (index == -1)
+            {
+                throw new Exception("Элемент не найден");
+            }
+            if (source.Orders[index].Status != OrderStatus.Готов)
+            {
+                throw new Exception("Заказ не в статусе \"Готов\"");
+            }
+            source.Orders[index].DateImplement = DateTime.Now;
+            source.Orders[index].Status = OrderStatus.Оплачен;
         }
     }
 }

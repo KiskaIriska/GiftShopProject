@@ -57,7 +57,7 @@ namespace GiftShopView
 
         private void ПодарочныеНаборыToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormGiftSet>();
+            var form = Container.Resolve<FormGiftSetList>();
             form.ShowDialog();
         }
 

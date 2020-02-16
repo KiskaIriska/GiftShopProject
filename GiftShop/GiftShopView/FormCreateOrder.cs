@@ -1,4 +1,5 @@
-﻿using GiftShopBusinessLogic.BingingModels;
+﻿
+using GiftShopBusinessLogic.BingingModels;
 using GiftShopBusinessLogic.Interfaces;
 using GiftShopBusinessLogic.ViewModels;
 using System;
@@ -33,7 +34,7 @@ namespace GiftShopView
                 var listP = logicP.GetList();
                 if (listP != null)
                 {
-                    comboBoxGiftSet.DisplayMember = "ProductName";
+                    comboBoxGiftSet.DisplayMember = "GiftSetName";
                     comboBoxGiftSet.ValueMember = "Id";
                     comboBoxGiftSet.DataSource = listP;
                     comboBoxGiftSet.SelectedItem = null;
@@ -41,14 +42,12 @@ namespace GiftShopView
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void CalcSum()
         {
-            if (comboBoxGiftSet.SelectedValue != null &&
-           !string.IsNullOrEmpty(textBoxCount.Text))
+            if (comboBoxGiftSet.SelectedValue != null && !string.IsNullOrEmpty(textBoxCount.Text))
             {
                 try
                 {
@@ -59,8 +58,7 @@ namespace GiftShopView
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                   MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -68,23 +66,20 @@ namespace GiftShopView
         {
             CalcSum();
         }
-        private void comboBoxProduct_SelectedIndexChanged(object sender, EventArgs e)
+        private void comboBoxGiftSet_SelectedIndexChanged(object sender, EventArgs e)
         {
             CalcSum();
         }
-
-        private void ButtonSave_Click(object sender, EventArgs e)
+        private void buttonSave_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(textBoxCount.Text))
             {
-                MessageBox.Show("Заполните поле Количество", "Ошибка",
-               MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Заполните поле Количество", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (comboBoxGiftSet.SelectedValue == null)
             {
-                MessageBox.Show("Выберите изделие", "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
+                MessageBox.Show("Выберите ингредиент", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             try
@@ -95,25 +90,19 @@ namespace GiftShopView
                     Count = Convert.ToInt32(textBoxCount.Text),
                     Sum = Convert.ToDecimal(textBoxSum.Text)
                 });
-                MessageBox.Show("Сохранение прошло успешно", "Сообщение",
-               MessageBoxButtons.OK, MessageBoxIcon.Information);
-               
-            DialogResult = DialogResult.OK;
+                MessageBox.Show("Сохранение прошло успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DialogResult = DialogResult.OK;
                 Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
-            }
-        }
-
-        private void ButtonCancel_Click(object sender, EventArgs e)
-        {
-            {
-                DialogResult = DialogResult.Cancel;
-                Close();
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
     }
 }
