@@ -22,7 +22,7 @@ namespace GiftShopView
             InitializeComponent();
             this.logic = logic;
         }
-        private void FormCountPizza_Load(object sender, EventArgs e)
+        private void FormCountGiftSet_Load(object sender, EventArgs e)
         {
             LoadData();
         }
