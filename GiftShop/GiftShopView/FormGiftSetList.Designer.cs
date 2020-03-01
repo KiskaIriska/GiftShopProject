@@ -95,7 +95,7 @@
             this.Controls.Add(this.buttonAdd);
             this.Controls.Add(this.dataGridView);
             this.Name = "FormGiftSetList";
-            this.Text = "FormGiftSetList";
+            this.Text = "CписокНаборов";
             this.Load += new System.EventHandler(this.FormCountGiftSet_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);
