@@ -51,7 +51,7 @@ namespace GiftShopDatabaseImplement.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("GiftSets");
                 });
 
             modelBuilder.Entity("GiftShopDatabaseImplement.Models.GiftSetComponent", b =>
@@ -76,7 +76,7 @@ namespace GiftShopDatabaseImplement.Migrations
 
                     b.HasIndex("GiftSetId");
 
-                    b.ToTable("ProductComponents");
+                    b.ToTable("GiftSetComponents");
                 });
 
             modelBuilder.Entity("GiftShopDatabaseImplement.Models.Order", b =>
@@ -120,7 +120,7 @@ namespace GiftShopDatabaseImplement.Migrations
                         .IsRequired();
 
                     b.HasOne("GiftShopDatabaseImplement.Models.GiftSet", "GiftSet")
-                        .WithMany()
+                        .WithMany("GiftSetComponents")
                         .HasForeignKey("GiftSetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

@@ -14,10 +14,8 @@ namespace GiftShopDatabaseImplement.Models
         public string GiftSetName { get; set; }
         [Required]
         public decimal Price { get; set; }
-
-        [ForeignKey("GiftSetId")]
+        
         public virtual List<Order> Orders { get; set; }
-
-        public virtual GiftSetComponent GiftSetComponent { get; set; }
+        public virtual List<GiftSetComponent> GiftSetComponents { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace GiftShopDatabaseImplement
         {
             if (optionsBuilder.IsConfigured == false)
             {
-                optionsBuilder.UseSqlServer(@"Data Source = DESKTOP-3KN3387\SQLEXPRESS;Initial Catalog=GiftShopDatabase;
+                optionsBuilder.UseSqlServer(@"Data Source = DESKTOP-8A4H0QT\SQLEXPRESS;Initial Catalog=GiftShopDatabase;
                 Integrated Security=True;MultipleActiveResultSets=True;");
             }
             base.OnConfiguring(optionsBuilder);
