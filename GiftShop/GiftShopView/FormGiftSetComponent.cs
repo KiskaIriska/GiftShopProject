@@ -47,7 +47,6 @@ namespace GiftShopView
                 comboBoxComponent.SelectedItem = null;
             }
         }
-       
         private void ButtonSave_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(textBoxCount.Text))
@@ -64,7 +63,6 @@ namespace GiftShopView
             }
             DialogResult = DialogResult.OK;
             Close();
-
         }
 
         private void ButtonCancel_Click(object sender, EventArgs e)

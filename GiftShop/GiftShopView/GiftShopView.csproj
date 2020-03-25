@@ -150,6 +150,10 @@
       <Project>{41d7e17f-f362-4dd6-a09e-09cb15492fca}</Project>
       <Name>GiftShopBusinessLogic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GiftShopFileImplement\GiftShopFileImplement.csproj">
+      <Project>{980be766-4352-449e-8673-b75129c75720}</Project>
+      <Name>GiftShopFileImplement</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GiftShopListImplement\GiftShopListImplement.csproj">
       <Project>{aca2913f-0a91-4cdc-87c8-dc6638559214}</Project>
       <Name>GiftShopListImplement</Name>
