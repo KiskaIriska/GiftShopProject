@@ -47,33 +47,7 @@ namespace GiftShopView
                 comboBoxComponent.SelectedItem = null;
             }
         }
-        /*
-        private void FormGiftSetComponent_Load(object sender, EventArgs e)
-        {
-            try
-            {
-                List<ComponentViewModel> list = logic.GetList();
-                if (list != null)
-                {
-                    comboBoxComponent.DisplayMember = "ComponentName";
-                    comboBoxComponent.ValueMember = "Id";
-                    comboBoxComponent.DataSource = list;
-                    comboBoxComponent.SelectedItem = null;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
-            }
-            if (ModelView != null)
-            {
-                comboBoxComponent.Enabled = false;
-                comboBoxComponent.SelectedValue = ModelView.ComponentId;
-                textBoxCount.Text = ModelView.Count.ToString();
-            }
-        }
-        */
+       
         private void ButtonSave_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(textBoxCount.Text))
@@ -89,7 +63,8 @@ namespace GiftShopView
                 return;
             }
             DialogResult = DialogResult.OK;
-            Close();
+            Close();
+
         }
 
         private void ButtonCancel_Click(object sender, EventArgs e)
