@@ -85,20 +85,16 @@ namespace GiftShopListImplement.Implements
                         result.Add(CreateViewModel(order));
                         break;
                     }
-
                     continue;
                 }
-
                 result.Add(CreateViewModel(order));
             }
-
             return result;
         }
 
         private OrderViewModel CreateViewModel(Order order)
         {
             string productName = null;
-
             foreach (var product in source.GiftSets)
             {
                 if (product.Id == order.GiftSetId)
@@ -124,5 +120,6 @@ namespace GiftShopListImplement.Implements
                 DateImplement = order.DateImplement
             };
         }
-    }
+    }
+
 }
