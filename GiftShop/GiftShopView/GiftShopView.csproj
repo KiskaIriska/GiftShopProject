@@ -244,6 +244,12 @@
     <Compile Include="FormReportGiftSetComponents.Designer.cs">
       <DependentUpon>FormReportGiftSetComponents.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormReportOrders.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReportOrders.Designer.cs">
+      <DependentUpon>FormReportOrders.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
@@ -271,6 +277,9 @@
     <EmbeddedResource Include="FormReportGiftSetComponents.resx">
       <DependentUpon>FormReportGiftSetComponents.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormReportOrders.resx">
+      <DependentUpon>FormReportOrders.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -281,7 +290,24 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Report.rdlc" />
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\GiftShopBusinessLogic.BingingModels.ChangeStatusBindingModel.datasource" />
+    <None Include="Properties\DataSources\GiftShopBusinessLogic.BingingModels.ComponentBindingModel.datasource" />
+    <None Include="Properties\DataSources\GiftShopBusinessLogic.BingingModels.CreateOrderBindingModel.datasource" />
+    <None Include="Properties\DataSources\GiftShopBusinessLogic.BingingModels.GiftSetBindingModel.datasource" />
+    <None Include="Properties\DataSources\GiftShopBusinessLogic.BingingModels.OrderBindingModel.datasource" />
+    <None Include="Properties\DataSources\GiftShopBusinessLogic.BingingModels.ReportBindingModel.datasource" />
+    <None Include="Properties\DataSources\GiftShopBusinessLogic.BusinessLogics.MainLogic.datasource" />
+    <None Include="Properties\DataSources\GiftShopBusinessLogic.BusinessLogics.ReportLogic.datasource" />
+    <None Include="Properties\DataSources\GiftShopBusinessLogic.Interfaces.IComponentLogic.datasource" />
+    <None Include="Properties\DataSources\GiftShopBusinessLogic.Interfaces.IGiftSetLogic.datasource" />
+    <None Include="Properties\DataSources\GiftShopBusinessLogic.Interfaces.IOrderLogic.datasource" />
+    <None Include="Properties\DataSources\GiftShopBusinessLogic.ViewModels.ComponentViewModel.datasource" />
+    <None Include="Properties\DataSources\GiftShopBusinessLogic.ViewModels.GiftSetViewModel.datasource" />
+    <None Include="Properties\DataSources\GiftShopBusinessLogic.ViewModels.OrderViewModel.datasource" />
+    <None Include="Properties\DataSources\GiftShopBusinessLogic.ViewModels.ReportGiftSetComponentViewModel.datasource" />
+    <None Include="Properties\DataSources\GiftShopBusinessLogic.ViewModels.ReportOrdersViewModel.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
