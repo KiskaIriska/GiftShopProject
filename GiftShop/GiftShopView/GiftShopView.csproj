@@ -98,6 +98,24 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormReplenishWarehouse.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReplenishWarehouse.Designer.cs">
+      <DependentUpon>FormReplenishWarehouse.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormWarehouse.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormWarehouse.Designer.cs">
+      <DependentUpon>FormWarehouse.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormWarehouses.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormWarehouses.Designer.cs">
+      <DependentUpon>FormWarehouses.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormComponent.resx">
@@ -120,6 +138,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReplenishWarehouse.resx">
+      <DependentUpon>FormReplenishWarehouse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormWarehouse.resx">
+      <DependentUpon>FormWarehouse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormWarehouses.resx">
+      <DependentUpon>FormWarehouses.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

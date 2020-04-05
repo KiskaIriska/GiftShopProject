@@ -30,6 +30,7 @@ namespace GiftShopView
            HierarchicalLifetimeManager());
             currentContainer.RegisterType<IGiftSetLogic, GiftSetLogic>(new
            HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IWarehouseLogic, WarehouseLogic>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<IOrderLogic, OrderLogic>(new
            HierarchicalLifetimeManager());
             return currentContainer;
