@@ -28,22 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
-            this.ReportOrdersViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GiftSetName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Price = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.dateTimePickerTo = new System.Windows.Forms.DateTimePicker();
             this.dateTimePickerFrom = new System.Windows.Forms.DateTimePicker();
             this.buttonCreate = new System.Windows.Forms.Button();
-            this.buttonPDF = new System.Windows.Forms.Button();
-            this.reportViewer = new Microsoft.Reporting.WinForms.ReportViewer();
-            ((System.ComponentModel.ISupportInitialize)(this.ReportOrdersViewModelBindingSource)).BeginInit();
+            this.buttonExcel = new System.Windows.Forms.Button();
+            this.dataGridView = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
-            // 
-            // ReportOrdersViewModelBindingSource
-            // 
-            this.ReportOrdersViewModelBindingSource.DataSource = typeof(GiftShopBusinessLogic.ViewModels.ReportOrdersViewModel);
+         
             // 
             // label1
             // 
@@ -87,35 +84,50 @@
             this.buttonCreate.UseVisualStyleBackColor = true;
             this.buttonCreate.Click += new System.EventHandler(this.buttonCreate_Click);
             // 
-            // buttonPDF
+            // buttonExcel
             // 
-            this.buttonPDF.Location = new System.Drawing.Point(649, 4);
-            this.buttonPDF.Name = "buttonPDF";
-            this.buttonPDF.Size = new System.Drawing.Size(75, 23);
-            this.buttonPDF.TabIndex = 5;
-            this.buttonPDF.Text = "В Pdf";
-            this.buttonPDF.UseVisualStyleBackColor = true;
-            this.buttonPDF.Click += new System.EventHandler(this.buttonPDF_Click);
+            this.buttonExcel.Location = new System.Drawing.Point(649, 4);
+            this.buttonExcel.Name = "buttonExcel";
+            this.buttonExcel.Size = new System.Drawing.Size(75, 23);
+            this.buttonExcel.TabIndex = 5;
+            this.buttonExcel.Text = "В Excel";
+            this.buttonExcel.UseVisualStyleBackColor = true;
+            this.buttonExcel.Click += new System.EventHandler(this.buttonExcel_Click);
             // 
-            // reportViewer
+            // dataGridView
             // 
-            reportDataSource1.Name = "DataSetOrders";
-            reportDataSource1.Value = this.ReportOrdersViewModelBindingSource;
-            this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
-            this.reportViewer.LocalReport.ReportEmbeddedResource = "GiftShopView.Report.rdlc";
-            this.reportViewer.Location = new System.Drawing.Point(2, 33);
-            this.reportViewer.Name = "reportViewer";
-            this.reportViewer.ServerReport.BearerToken = null;
-            this.reportViewer.Size = new System.Drawing.Size(801, 412);
-            this.reportViewer.TabIndex = 6;
+            this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Date,
+            this.GiftSetName,
+            this.Price});
+            this.dataGridView.Location = new System.Drawing.Point(12, 42);
+            this.dataGridView.Name = "dataGridView";
+            this.dataGridView.Size = new System.Drawing.Size(776, 396);
+            this.dataGridView.TabIndex = 6;
+            // 
+            // Date
+            // 
+            this.Date.HeaderText = "Дата";
+            this.Date.Name = "Date";
+            // 
+            // GiftSetName
+            // 
+            this.GiftSetName.HeaderText = "Заказ";
+            this.GiftSetName.Name = "GiftSetName";
+            // 
+            // Price
+            // 
+            this.Price.HeaderText = "Цена";
+            this.Price.Name = "Price";
             // 
             // FormReportOrders
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.reportViewer);
-            this.Controls.Add(this.buttonPDF);
+            this.Controls.Add(this.dataGridView);
+            this.Controls.Add(this.buttonExcel);
             this.Controls.Add(this.buttonCreate);
             this.Controls.Add(this.dateTimePickerFrom);
             this.Controls.Add(this.dateTimePickerTo);
@@ -123,8 +135,7 @@
             this.Controls.Add(this.label1);
             this.Name = "FormReportOrders";
             this.Text = "Заказы клиентов";
-            this.Load += new System.EventHandler(this.FormReportOrders_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.ReportOrdersViewModelBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -137,8 +148,10 @@
         private System.Windows.Forms.DateTimePicker dateTimePickerTo;
         private System.Windows.Forms.DateTimePicker dateTimePickerFrom;
         private System.Windows.Forms.Button buttonCreate;
-        private System.Windows.Forms.Button buttonPDF;
-        private Microsoft.Reporting.WinForms.ReportViewer reportViewer;
-        private System.Windows.Forms.BindingSource ReportOrdersViewModelBindingSource;
+        private System.Windows.Forms.Button buttonExcel;
+        private System.Windows.Forms.DataGridView dataGridView;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Date;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GiftSetName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Price;
     }
 }

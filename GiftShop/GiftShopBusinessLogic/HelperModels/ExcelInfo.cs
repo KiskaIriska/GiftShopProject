@@ -9,6 +9,6 @@ namespace GiftShopBusinessLogic.HelperModels
     {
         public string FileName { get; set; }
         public string Title { get; set; }
-        public List<ReportGiftSetComponentViewModel> GiftSetComponents { get; set; }
+        public List<ReportOrdersViewModel> Orders { get; set; }
     }
 }

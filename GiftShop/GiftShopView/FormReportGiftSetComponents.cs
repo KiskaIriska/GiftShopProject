@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Unity;
+using Microsoft.Reporting.WinForms;
 
 namespace GiftShopView
 {
@@ -27,53 +28,42 @@ namespace GiftShopView
             InitializeComponent();
             this.logic = logic;
         }
-        private void FormReportProductComponents_Load(object sender, EventArgs e)
+        
+        private void buttonSaveToPdf_Click(object sender, EventArgs e)
         {
-            try
-            {
-                var dict = logic.GetGiftSetComponent();
-                if (dict != null)
-                {
-                    dataGridView.Rows.Clear();
-                    foreach (var elem in dict)
-                    {
-                        dataGridView.Rows.Add(new object[] { elem.ComponentName, "", ""});
-                        foreach (var listElem in elem.GiftSets)
-                        {
-                            dataGridView.Rows.Add(new object[] { "", listElem.Item1,listElem.Item2 });
-                        }
-                        dataGridView.Rows.Add(new object[] { "Итого", "", elem.TotalCount});
-                        dataGridView.Rows.Add(new object[] { });
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
-            }
-        }
-        private void buttonSaveToExcel_Click(object sender, EventArgs e)
-        {
-            using (var dialog = new SaveFileDialog { Filter = "xlsx|*.xlsx" })
+            using (var dialog = new SaveFileDialog { Filter = "pdf|*.pdf" })
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
                     try
                     {
-                        logic.SaveGiftSetComponentToExcelFile(new ReportBindingModel
+                        logic.SaveGiftSetComponentToPdfFile(new ReportBindingModel
                         {
-                            FileName = dialog.FileName
+                            FileName = dialog.FileName,
                         });
-                        MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
+
+                        MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                       MessageBoxIcon.Error);
+                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
+            }
+        }
+
+        private void reportViewer_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                var dataSource = logic.GetGiftSetComponent();
+                ReportDataSource source = new ReportDataSource("DataSetProductComponent", dataSource);
+                reportViewer.LocalReport.DataSources.Add(source);
+                reportViewer.RefreshReport();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

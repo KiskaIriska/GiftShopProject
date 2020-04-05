@@ -31,17 +31,20 @@ namespace GiftShopBusinessLogic.BusinessLogics
                         JustificationValues = JustificationValues.Center
                     }
                 }));
-                foreach (var component in info.Components)
+                foreach (var component in info.GiftSets)
                 {
                     docBody.AppendChild(CreateParagraph(new WordParagraph
                     {
-                        Texts = new List<string> { component.ComponentName },
+                        Texts = new List<string> { component.GiftSetName + " - " + component.Price.ToString()+" р."
+                        },
                         TextProperties = new WordParagraphProperties
                         {
+                            Bold = true,
                             Size = "24",
                             JustificationValues = JustificationValues.Both
                         }
-                    }));
+
+                    }));                  
                 }
                 docBody.AppendChild(CreateSectionProperties());
                 wordDocument.MainDocumentPart.Document.Save();
@@ -82,19 +85,15 @@ namespace GiftShopBusinessLogic.BusinessLogics
                         Val =
                    paragraph.TextProperties.Size
                     });
-                    if (paragraph.TextProperties.Bold)
+                    if (!run.StartsWith(" - ") && paragraph.TextProperties.Bold)
                     {
                         properties.AppendChild(new Bold());
                     }
+
                     docRun.AppendChild(properties);
-                    docRun.AppendChild(new Text
-                    {
-                        Text = run,
-                        Space =
-                   SpaceProcessingModeValues.Preserve
-                    });
+                    docRun.AppendChild(new Text { Text = run, Space = SpaceProcessingModeValues.Preserve });
                     docParagraph.AppendChild(docRun);
-                }
+                }          
                 return docParagraph;
             }
             return null;

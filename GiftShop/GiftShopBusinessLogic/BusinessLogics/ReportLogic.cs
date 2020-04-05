@@ -30,25 +30,23 @@ namespace GiftShopBusinessLogic.BusinessLogics
             var components = componentLogic.Read(null);
             var products = productLogic.Read(null);
             var list = new List<ReportGiftSetComponentViewModel>();
-            foreach (var component in components)
+
+            foreach (var product in products)
             {
-                var record = new ReportGiftSetComponentViewModel
-                {
-                    ComponentName = component.ComponentName,
-                    GiftSets = new List<Tuple<string, int>>(),
-                    TotalCount = 0
-                };
-                foreach (var product in products)
+                foreach (var component in components)
                 {
                     if (product.GiftSetComponents.ContainsKey(component.Id))
                     {
-                        record.GiftSets.Add(new Tuple<string, int>(product.GiftSetName,
-                       product.GiftSetComponents[component.Id].Item2));
-                        record.TotalCount +=
-                       product.GiftSetComponents[component.Id].Item2;
+                        var record = new ReportGiftSetComponentViewModel
+                        {
+                            GiftSetName = product.GiftSetName,
+                            ComponentName = component.ComponentName,
+                            Count = product.GiftSetComponents[component.Id].Item2
+                        };
+
+                        list.Add(record);
                     }
                 }
-                list.Add(record);
             }
             return list;
         }
@@ -75,28 +73,28 @@ namespace GiftShopBusinessLogic.BusinessLogics
             .ToList();
         }
         /// <summary>
-        /// Сохранение компонент в файл-Word
+        /// Сохранение изделий в файл-Word
         /// </summary>
         /// <param name="model"></param>
-        public void SaveComponentsToWordFile(ReportBindingModel model)
+        public void SaveGiftSetsToWordFile(ReportBindingModel model)
         {
             SaveToWord.CreateDoc(new WordInfo
             {
                 FileName = model.FileName,
-                Title = "Список компонент",
-                Components = componentLogic.Read(null)
+                Title = "Список наборов:",
+                GiftSets = productLogic.Read(null)
             });
         }
         /// <summary>
         /// Сохранение компонент с указаеним продуктов в файл-Excel
         /// </summary>
         /// <param name="model"></param>
-        public void SaveGiftSetComponentToExcelFile(ReportBindingModel model)
+        public void SaveGiftSetComponentToPdfFile(ReportBindingModel model)
         {
-            SaveToExcel.CreateDoc(new ExcelInfo
+            SaveToPdf.CreateDoc(new PdfInfo
             {
                 FileName = model.FileName,
-                Title = "Список компонент",
+                Title = "Список издлий с компонентами",
                 GiftSetComponents = GetGiftSetComponent()
             });
         }
@@ -104,14 +102,14 @@ namespace GiftShopBusinessLogic.BusinessLogics
         /// Сохранение заказов в файл-Pdf
         /// </summary>
         /// <param name="model"></param>
-        public void SaveOrdersToPdfFile(ReportBindingModel model)
+        public void SaveOrdersToExcelFile(ReportBindingModel model)
         {
-            SaveToPdf.CreateDoc(new PdfInfo
+            var a = GetOrders(model);
+
+            SaveToExcel.CreateDoc(new ExcelInfo
             {
                 FileName = model.FileName,
                 Title = "Список заказов",
-                DateFrom = model.DateFrom.Value,
-                DateTo = model.DateTo.Value,
                 Orders = GetOrders(model)
             });
         }

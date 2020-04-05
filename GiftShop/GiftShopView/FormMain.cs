@@ -139,13 +139,13 @@ namespace GiftShopView
         }
        
       
-        private void списокКомпонентовToolStripMenuItem_Click(object sender, EventArgs e)
+        private void списокИзделийToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var dialog = new SaveFileDialog { Filter = "docx|*.docx" })
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    reportLogic.SaveComponentsToWordFile(new ReportBindingModel
+                    reportLogic.SaveGiftSetsToWordFile(new ReportBindingModel
                     {
                         FileName =
                    dialog.FileName
