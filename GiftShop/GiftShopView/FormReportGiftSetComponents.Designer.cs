@@ -29,16 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource2 = new Microsoft.Reporting.WinForms.ReportDataSource();
             this.ReportOrdersViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.buttonSaveToPdf = new System.Windows.Forms.Button();
             this.reportViewer = new Microsoft.Reporting.WinForms.ReportViewer();
             ((System.ComponentModel.ISupportInitialize)(this.ReportOrdersViewModelBindingSource)).BeginInit();
             this.SuspendLayout();
-            // 
-            // ReportOrdersViewModelBindingSource
-            // 
-            this.ReportOrdersViewModelBindingSource.DataSource = typeof(GiftShopBusinessLogic.ViewModels.ReportOrdersViewModel);
             // 
             // buttonSaveToPdf
             // 
@@ -52,9 +48,9 @@
             // 
             // reportViewer
             // 
-            reportDataSource1.Name = "DataSetOrders";
-            reportDataSource1.Value = this.ReportOrdersViewModelBindingSource;
-            this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
+            reportDataSource2.Name = "DataSetOrders";
+            reportDataSource2.Value = this.ReportOrdersViewModelBindingSource;
+            this.reportViewer.LocalReport.DataSources.Add(reportDataSource2);
             this.reportViewer.LocalReport.ReportEmbeddedResource = "GiftShopView.Report.rdlc";
             this.reportViewer.Location = new System.Drawing.Point(1, 79);
             this.reportViewer.Name = "reportViewer";
