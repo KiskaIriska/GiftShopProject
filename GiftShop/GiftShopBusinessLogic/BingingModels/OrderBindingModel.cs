@@ -13,6 +13,8 @@ namespace GiftShopBusinessLogic.BingingModels
         public int GiftSetId { get; set; }
         public int Count { get; set; }
         public decimal Sum { get; set; }
+        public int ClientId { get; set; }
+        public string ClientFIO { get; set; }
         public OrderStatus Status { get; set; }
         public DateTime DateCreate { get; set; }
         public DateTime? DateImplement { get; set; }

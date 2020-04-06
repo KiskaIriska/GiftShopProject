@@ -6,22 +6,26 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace GiftShopBusinessLogic.BingingModels
+namespace GiftShopBusinessLogic.ViewModels
 {
     [DataContract]
-    public class ClientBindingModel
+    public class ClientViewModel
     {
         [DataMember]
         public int ClientId { get; set; }
 
         [DataMember]
+        [DisplayName("Клиент")]
         public string ClientFIO { get; set; }
 
         [DataMember]
+        [DisplayName("Email")]
         public string Email { get; set; }
 
         [DataMember]
+        [DisplayName("Пароль")]
         public string Password { get; set; }
+
 
     }
 }

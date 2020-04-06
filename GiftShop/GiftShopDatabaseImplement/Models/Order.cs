@@ -15,10 +15,14 @@ namespace GiftShopDatabaseImplement.Models
         public int Id { get; set; }
 
         public int GiftSetId { get; set; }
+        public int ClientId { get; set; }
 
         [Required]
 
         public int Count { get; set; }
+  
+        [Required]
+        public string ClientFIO { get; set; }
 
         [Required]
 

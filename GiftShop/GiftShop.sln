@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GiftShopFileImplement", "Gi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GiftShopDatabaseImplement", "GiftShopDatabaseImplement\GiftShopDatabaseImplement.csproj", "{2DFC4D5C-27B4-4407-9DE6-BC2975A40A29}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GiftShopRestApi", "GiftShopRestApi\GiftShopRestApi.csproj", "{2E80C5DD-79F1-44F3-9A2B-4FA26C76740C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiftShopClientView", "GiftShopClientView\GiftShopClientView.csproj", "{E186D9B8-8646-4DE4-8FC3-C56D46A925D8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{2DFC4D5C-27B4-4407-9DE6-BC2975A40A29}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DFC4D5C-27B4-4407-9DE6-BC2975A40A29}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DFC4D5C-27B4-4407-9DE6-BC2975A40A29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E80C5DD-79F1-44F3-9A2B-4FA26C76740C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E80C5DD-79F1-44F3-9A2B-4FA26C76740C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E80C5DD-79F1-44F3-9A2B-4FA26C76740C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E80C5DD-79F1-44F3-9A2B-4FA26C76740C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E186D9B8-8646-4DE4-8FC3-C56D46A925D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E186D9B8-8646-4DE4-8FC3-C56D46A925D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E186D9B8-8646-4DE4-8FC3-C56D46A925D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E186D9B8-8646-4DE4-8FC3-C56D46A925D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
