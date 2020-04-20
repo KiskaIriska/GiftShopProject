@@ -94,7 +94,7 @@ namespace GiftShopBusinessLogic.BusinessLogics
             SaveToPdf.CreateDoc(new PdfInfo
             {
                 FileName = model.FileName,
-                Title = "Список издлий с компонентами",
+                Title = "Список изделий с компонентами",
                 GiftSetComponents = GetGiftSetComponent()
             });
         }

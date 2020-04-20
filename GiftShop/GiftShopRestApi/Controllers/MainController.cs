@@ -1,13 +1,13 @@
-﻿using GiftShopBusinessLogic.BusinessLogics;
+﻿using GiftShopBusinessLogic.BingingModels;
+using GiftShopBusinessLogic.BusinessLogics;
 using GiftShopBusinessLogic.Interfaces;
+using GiftShopBusinessLogic.ViewModels;
+using GiftShopRestApi.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using GiftShopBusinessLogic.BingingModels;
-using GiftShopBusinessLogic.ViewModels;
-using GiftShopRestApi.Models;
 
 namespace GiftShopRestApi.Controllers
 {
@@ -22,7 +22,8 @@ namespace GiftShopRestApi.Controllers
         private readonly MainLogic _main;
 
         public MainController(IOrderLogic order, IGiftSetLogic product, MainLogic main)
-        { _order = order;
+        {
+            _order = order;
             _product = product;
             _main = main;
         }
@@ -38,10 +39,12 @@ namespace GiftShopRestApi.Controllers
         {
             if (model == null) return null;
 
-            return new GiftSetModel {
+            return new GiftSetModel
+            {
                 Id = model.Id,
                 GiftSetName = model.GiftSetName,
-                Price = model.Price };
+                Price = model.Price
+            };
         }
     }
 }

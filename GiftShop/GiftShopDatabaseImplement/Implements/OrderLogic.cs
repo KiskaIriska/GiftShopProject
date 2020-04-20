@@ -33,6 +33,7 @@ namespace GiftShopDatabaseImplement.Implements
                     context.Orders.Add(element);
                 }
                 element.GiftSetId = model.GiftSetId == 0 ? element.GiftSetId : model.GiftSetId;
+                element.ClientId = model.ClientId == null ? element.ClientId : (int)model.ClientId;
                 element.Count = model.Count;
                 element.Sum = model.Sum;
                 element.Status = model.Status;
@@ -69,7 +70,9 @@ model.Id);
                 rec => model == null ||
                 (rec.Id == model.Id && model.Id.HasValue) ||
                 (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo) ||
-                (model.ClientId.HasValue && rec.ClientId == model.ClientId)).Select(rec => new OrderViewModel
+                (model.ClientId.HasValue && rec.ClientId == model.ClientId)).Include(rec => rec.GiftSet)
+                .Include(rec => rec.Client)
+                .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
                     GiftSetId = rec.GiftSetId,
@@ -79,9 +82,10 @@ model.Id);
                     Status = rec.Status,
                     Count = rec.Count,
                     Sum = rec.Sum,
-                    ClientFIO = source.Clients.FirstOrDefault(recC => recC.Id == rec.ClientId)?.ClientFIO,
-                    GiftSetName = source.GiftSets.FirstOrDefault(recP => recP.Id == rec.GiftSetId)?.GiftSetName,
-                }).ToList();
+                    ClientFIO = rec.Client.ClientFIO,
+                    GiftSetName = rec.GiftSet.GiftSetName
+                     })
+               .ToList();
             }
         }
     }

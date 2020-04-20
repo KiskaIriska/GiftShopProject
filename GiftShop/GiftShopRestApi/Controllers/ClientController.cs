@@ -1,11 +1,13 @@
-﻿using System;
+﻿using GiftShopBusinessLogic.BingingModels;
+using GiftShopBusinessLogic.BusinessLogics;
+using GiftShopBusinessLogic.Interfaces;
+using GiftShopBusinessLogic.ViewModels;
+using GiftShopRestApi.Models;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using GiftShopBusinessLogic.BingingModels;
-using GiftShopBusinessLogic.Interfaces;
-using GiftShopBusinessLogic.ViewModels;
-using Microsoft.AspNetCore.Mvc;
 
 namespace GiftShopRestApi.Controllers
 {
