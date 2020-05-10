@@ -1,4 +1,5 @@
 ﻿using GiftShopBusinessLogic.BingingModels;
+using GiftShopBusinessLogic.Enums;
 using GiftShopBusinessLogic.Interfaces;
 using GiftShopBusinessLogic.ViewModels;
 using GiftShopDatabaseImplement.Models;
@@ -34,6 +35,7 @@ namespace GiftShopDatabaseImplement.Implements
                 }
                 element.GiftSetId = model.GiftSetId == 0 ? element.GiftSetId : model.GiftSetId;
                 element.ClientId = model.ClientId == null ? element.ClientId : (int)model.ClientId;
+                element.ImplementerId = model.ImplementerId;
                 element.Count = model.Count;
                 element.Sum = model.Sum;
                 element.Status = model.Status;
@@ -67,25 +69,32 @@ model.Id);
             using (var source = new GiftShopDatabase())
             {
                 return source.Orders.Where(
-                rec => model == null ||
-                (rec.Id == model.Id && model.Id.HasValue) ||
-                (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo) ||
-                (model.ClientId.HasValue && rec.ClientId == model.ClientId)).Include(rec => rec.GiftSet)
+                rec => model == null
+                || rec.Id == model.Id && model.Id.HasValue
+                    || model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo
+                    || model.ClientId.HasValue && rec.ClientId == model.ClientId
+                    || model.FreeOrders.HasValue && model.FreeOrders.Value && !rec.ImplementerId.HasValue
+                    || model.ImplementerId.HasValue && rec.ImplementerId == model.ImplementerId && rec.Status == OrderStatus.Выполняется
+              )
+                .Include(rec => rec.GiftSet)
                 .Include(rec => rec.Client)
+                .Include(rec => rec.Implementer)
                 .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
-                    GiftSetId = rec.GiftSetId,
                     ClientId = rec.ClientId,
-                    DateCreate = rec.DateCreate,
-                    DateImplement = rec.DateImplement,
-                    Status = rec.Status,
+                    ImplementerId = rec.ImplementerId,
+                    GiftSetId = rec.GiftSetId,
                     Count = rec.Count,
                     Sum = rec.Sum,
+                    Status = rec.Status,
+                    DateCreate = rec.DateCreate,
+                    DateImplement = rec.DateImplement,
+                    GiftSetName = rec.GiftSet.GiftSetName,
                     ClientFIO = rec.Client.ClientFIO,
-                    GiftSetName = rec.GiftSet.GiftSetName
-                     })
-               .ToList();
+                    ImplementerFIO = rec.ImplementerId.HasValue ? rec.Implementer.ImplementerFIO : string.Empty,
+                })
+                .ToList();
             }
         }
     }
