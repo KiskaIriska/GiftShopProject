@@ -13,8 +13,8 @@ namespace GiftShopListImplement
         public List<GiftSet> GiftSets { get; set; }
         public List<GiftSetComponent> GiftSetComponents { get; set; }
         public List<Client> Clients { get; set; }
-
         public List<Implementer> Implementers { get; set; }
+        public List<MessageInfo> MessageInfoes { get; set; }
         private DataListSingleton()
         {
             Components = new List<Component>();
@@ -23,6 +23,7 @@ namespace GiftShopListImplement
             GiftSetComponents = new List<GiftSetComponent>();
             Clients = new List<Client>();
             Implementers = new List<Implementer>();
+            MessageInfoes = new List<MessageInfo>();
         }
         public static DataListSingleton GetInstance()
         {
