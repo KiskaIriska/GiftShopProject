@@ -17,107 +17,97 @@ namespace GiftShopBusinessLogic.BusinessLogics
     public static class MailLogic
     {
         private static string smtpClientHost;
-    private static int smtpClientPort;
-    private static string mailLogin;
-    private static string mailPassword;
-
-    public static void MailConfig(MailConfig config)
-    {
-        smtpClientHost = config.SmtpClientHost;
-        smtpClientPort = config.SmtpClientPort;
-        mailLogin = config.MailLogin;
-        mailPassword = config.MailPassword;
-    }
-
-    public static async void MailSendAsync(MailSendInfo info)
-    {
-        if (string.IsNullOrEmpty(smtpClientHost) || smtpClientPort == 0)
+        private static int smtpClientPort;
+        private static string mailLogin;
+        private static string mailPassword;
+        public static void MailConfig(MailConfig config)
         {
-            return;
+            smtpClientHost = config.SmtpClientHost;
+            smtpClientPort = config.SmtpClientPort;
+            mailLogin = config.MailLogin;
+            mailPassword = config.MailPassword;
         }
-
-        if (string.IsNullOrEmpty(mailLogin) || string.IsNullOrEmpty(mailPassword))
+        public static async void MailSendAsync(MailSendInfo info)
         {
-            return;
-        }
-
-        if (string.IsNullOrEmpty(info.MailAddress) || string.IsNullOrEmpty(info.Subject) || string.IsNullOrEmpty(info.Text))
-        {
-            return;
-        }
-
-        using (var objMailMessage = new MailMessage())
-        {
-            using (var objSmtpClient = new SmtpClient(smtpClientHost, smtpClientPort))
+            if (string.IsNullOrEmpty(smtpClientHost) || smtpClientPort == 0)
             {
-                try
+                return;
+            }
+            if (string.IsNullOrEmpty(mailLogin) || string.IsNullOrEmpty(mailPassword))
+            {
+                return;
+            }
+            if (string.IsNullOrEmpty(info.MailAddress) ||
+           string.IsNullOrEmpty(info.Subject) || string.IsNullOrEmpty(info.Text))
+            {
+                return;
+            }
+            using (var objMailMessage = new MailMessage())
+            {
+                using (var objSmtpClient = new SmtpClient(smtpClientHost,
+               smtpClientPort))
                 {
-                    objMailMessage.From = new MailAddress(mailLogin);
-                    objMailMessage.To.Add(new MailAddress(info.MailAddress));
-                    objMailMessage.Subject = info.Subject;
-                    objMailMessage.Body = info.Text;
-                    objMailMessage.SubjectEncoding = Encoding.UTF8;
-                    objMailMessage.BodyEncoding = Encoding.UTF8;
-
-                    objSmtpClient.UseDefaultCredentials = false;
-                    objSmtpClient.EnableSsl = true;
-                    objSmtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-                    objSmtpClient.Credentials = new NetworkCredential(mailLogin, mailPassword);
-
-                    await Task.Run(() => objSmtpClient.SendAsync(objMailMessage, null));
-                }
-                catch (Exception)
-                {
-                    throw;
+                    try
+                    {
+                        objMailMessage.From = new MailAddress(mailLogin);
+                        objMailMessage.To.Add(new MailAddress(info.MailAddress));
+                        objMailMessage.Subject = info.Subject;
+                        objMailMessage.Body = info.Text;
+                        objMailMessage.SubjectEncoding = Encoding.UTF8;
+                        objMailMessage.BodyEncoding = Encoding.UTF8;
+                        objSmtpClient.UseDefaultCredentials = false;
+                        objSmtpClient.EnableSsl = true;
+                        objSmtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+                        objSmtpClient.Credentials = new NetworkCredential(mailLogin,
+                        mailPassword);
+                        await Task.Run(() => objSmtpClient.SendMailAsync(objMailMessage));
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
                 }
             }
         }
-    }
-
-    public static async void MailCheck(MailCheckInfo info)
-    {
-        if (string.IsNullOrEmpty(info.PopHost) || info.PopPort == 0)
+        public static async void MailCheck(MailCheckInfo info)
         {
-            return;
-        }
-
-        if (string.IsNullOrEmpty(mailLogin) || string.IsNullOrEmpty(mailPassword))
-        {
-            return;
-        }
-
-        if (info.Logic == null)
-        {
-            return;
-        }
-
-        using (var client = new Pop3Client())
-        {
-            await Task.Run(() =>
+            if (string.IsNullOrEmpty(info.PopHost) || info.PopPort == 0)
             {
-                client.Connect(info.PopHost, info.PopPort, SecureSocketOptions.SslOnConnect);
-
-                client.Authenticate(mailLogin, mailPassword);
-
-                for (int i = 0; i < client.Count; i++)
+                return;
+            }
+            if (string.IsNullOrEmpty(mailLogin) || string.IsNullOrEmpty(mailPassword))
+            {
+                return;
+            }
+            if (info.Logic == null)
+            {
+                return;
+            }
+            using (var client = new Pop3Client())
+            {
+                await Task.Run(() =>
                 {
-                    var message = client.GetMessage(i);
-
-                    foreach (var mail in message.From.Mailboxes)
+                    client.Connect(info.PopHost, info.PopPort,
+                  SecureSocketOptions.SslOnConnect);
+                    client.Authenticate(mailLogin, mailPassword);
+                    for (int i = 0; i < client.Count; i++)
                     {
-                        info.Logic.Create(new MessageInfoBindingModel
+                        var message = client.GetMessage(i);
+                        foreach (var mail in message.From.Mailboxes)
                         {
-                            DateDelivery = message.Date.DateTime,
-                            MessageId = message.MessageId,
-                            FromMailAddress = mail.Address,
-                            Subject = message.Subject,
-                            Body = message.TextBody
-                        });
+                            info.Logic.Create(new MessageInfoBindingModel
+                            {
+                                DateDelivery = message.Date.DateTime,
+                                MessageId = message.MessageId,
+                                FromMailAddress = mail.Address,
+                                Subject = message.Subject,
+                                Body = message.TextBody
+                            });
+                        }
                     }
-                }
-                client.Disconnect(true);
-            });
+                    client.Disconnect(true);
+                });
+            }
         }
     }
-}
 }

@@ -2,9 +2,13 @@
 using GiftShopBusinessLogic.Enums;
 using GiftShopBusinessLogic.HelperModels;
 using GiftShopBusinessLogic.Interfaces;
+using MailKit.Net.Pop3;
+using MailKit.Security;
 using System;
-using System.Collections.Generic;
+using System.Net;
+using System.Net.Mail;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace GiftShopBusinessLogic.BusinessLogics
 {
@@ -36,7 +40,9 @@ namespace GiftShopBusinessLogic.BusinessLogics
 
             MailLogic.MailSendAsync(new MailSendInfo
             {
-                MailAddress = clientLogic.Read(new ClientBindingModel { Id = model.ClientId })?[0]?.Email,
+                MailAddress = clientLogic.Read(new ClientBindingModel {
+               Id = model.ClientId }
+                )?[0]?.Email,
                 Subject = $"Новый заказ",
                 Text = $"Заказ принят."
             });
@@ -46,7 +52,8 @@ namespace GiftShopBusinessLogic.BusinessLogics
         {
             lock (locker)
             {
-                var order = orderLogic.Read(new OrderBindingModel { Id = model.OrderId })?[0];
+                var order = orderLogic.Read(new OrderBindingModel { 
+               Id = model.OrderId })?[0];
 
                 if (order == null)
                 {
@@ -72,12 +79,14 @@ namespace GiftShopBusinessLogic.BusinessLogics
                     Count = order.Count,
                     Sum = order.Sum,
                     DateCreate = order.DateCreate,
+                    DateImplement = DateTime.Now,
                     Status = OrderStatus.Выполняется
                 });
 
                 MailLogic.MailSendAsync(new MailSendInfo
                 {
-                    MailAddress = clientLogic.Read(new ClientBindingModel { Id = order.ClientId })?[0]?.Email,
+                    MailAddress = clientLogic.Read(new ClientBindingModel { 
+                    Id = order.ClientId })?[0]?.Email,
                     Subject = $"Заказ №{order.Id}",
                     Text = $"Заказ №{order.Id} передан в работу."
                 });
@@ -107,13 +116,15 @@ namespace GiftShopBusinessLogic.BusinessLogics
                 Count = order.Count,
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
-                DateImplement = DateTime.Now,
+                DateImplement = order.DateImplement,
                 Status = OrderStatus.Готов
             });
 
             MailLogic.MailSendAsync(new MailSendInfo
             {
-                MailAddress = clientLogic.Read(new ClientBindingModel { Id = order.ClientId })?[0]?.Email,
+                MailAddress = clientLogic.Read(new ClientBindingModel
+                { 
+                Id = order.ClientId })?[0]?.Email,
                 Subject = $"Заказ №{order.Id}",
                 Text = $"Заказ №{order.Id} готов."
             });
@@ -149,7 +160,8 @@ namespace GiftShopBusinessLogic.BusinessLogics
 
             MailLogic.MailSendAsync(new MailSendInfo
             {
-                MailAddress = clientLogic.Read(new ClientBindingModel { Id = order.ClientId })?[0]?.Email,
+                MailAddress = clientLogic.Read(new ClientBindingModel {
+                Id = order.ClientId })?[0]?.Email,
                 Subject = $"Заказ №{order.Id}",
                 Text = $"Заказ №{order.Id} оплачен."
             });

@@ -1,21 +1,17 @@
 ﻿using GiftShopBusinessLogic.ViewModels;
 using System;
 using System.Windows.Forms;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GiftShopClientView
 {
     static class Program
     {
         public static ClientViewModel Client { get; set; }
-
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
         static void Main()
         {
             ClientApi.Connect();
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 

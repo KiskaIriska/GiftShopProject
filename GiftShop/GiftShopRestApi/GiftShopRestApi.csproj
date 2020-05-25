@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\GiftShopBusinessLogic\GiftShopBusinessLogic.csproj" />
     <ProjectReference Include="..\GiftShopDatabaseImplement\GiftShopDatabaseImplement.csproj" />
   </ItemGroup>
