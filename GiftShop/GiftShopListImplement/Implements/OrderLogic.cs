@@ -80,7 +80,8 @@ namespace GiftShopListImplement.Implements
             {
                 if (model != null)
                 {
-                    if (order.Id == model.Id)
+                    if (model != null && order.Id == model.Id
+                   || model.DateFrom.HasValue && model.DateTo.HasValue && order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo)
                     {
                         result.Add(CreateViewModel(order));
                         break;

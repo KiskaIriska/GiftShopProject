@@ -1,4 +1,5 @@
-﻿using GiftShopBusinessLogic.Interfaces;
+﻿using GiftShopBusinessLogic.BusinessLogics;
+using GiftShopBusinessLogic.Interfaces;
 using GiftShopDatabaseImplement.Implements;
 using System;
 using System.Collections.Generic;
@@ -28,9 +29,12 @@ namespace GiftShopView
             var currentContainer = new UnityContainer();
             currentContainer.RegisterType<IComponentLogic, ComponentLogic>(new
            HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IOrderLogic, OrderLogic>(new
+           HierarchicalLifetimeManager());
             currentContainer.RegisterType<IGiftSetLogic, GiftSetLogic>(new
            HierarchicalLifetimeManager());
-            currentContainer.RegisterType<IOrderLogic, OrderLogic>(new
+            currentContainer.RegisterType<MainLogic>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<ReportLogic>(new
            HierarchicalLifetimeManager());
             return currentContainer;
         }

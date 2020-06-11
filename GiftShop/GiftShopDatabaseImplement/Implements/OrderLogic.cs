@@ -29,7 +29,7 @@ namespace GiftShopDatabaseImplement.Implements
                 }
                 else
                 {
-                    element = new Order();             
+                    element = new Order();
                     context.Orders.Add(element);
                 }
                 element.GiftSetId = model.GiftSetId == 0 ? element.GiftSetId : model.GiftSetId;
@@ -60,25 +60,27 @@ model.Id);
             }
         }
 
-
         public List<OrderViewModel> Read(OrderBindingModel model)
         {
             using (var context = new GiftShopDatabase())
             {
                 return context.Orders
-            .Include(rec => rec.GiftSet)
-            .Where(rec => model == null || rec.Id == model.Id)
-            .Select(rec => new OrderViewModel
-            {
-                Id = rec.Id,
-                GiftSetName = rec.GiftSet.GiftSetName,
-                Count = rec.Count,
-                Sum = rec.Sum,
-                Status = rec.Status,
-                DateCreate = rec.DateCreate, 
-                DateImplement = rec.DateImplement
-            })
-            .ToList();
+                .Where(rec => model == null || (rec.Id == model.Id &&
+               model.Id.HasValue) ||
+                (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate
+               >= model.DateFrom && rec.DateCreate <= model.DateTo))
+                .Select(rec => new OrderViewModel
+                {
+                    Id = rec.Id,
+                    GiftSetId = rec.GiftSetId,
+                    DateCreate = rec.DateCreate,
+                    DateImplement = rec.DateImplement,
+                    Status = rec.Status,
+                    Count = rec.Count,
+                    Sum = rec.Sum,
+                    GiftSetName = rec.GiftSet.GiftSetName
+                })
+               .ToList();
             }
         }
     }
