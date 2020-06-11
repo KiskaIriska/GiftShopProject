@@ -58,6 +58,7 @@ namespace GiftShopFileImplement.Implements
         public List<OrderViewModel> Read(OrderBindingModel model)
         {
             return source.Orders
+
             .Where(
                 rec => model == null
                 || rec.Id == model.Id
@@ -77,6 +78,13 @@ namespace GiftShopFileImplement.Implements
                 DateImplement = rec.DateImplement
             })
             .ToList();
+        }
+         private string GetGiftSetName(int id)
+        {
+            string name = "";
+            var product = source.GiftSets.FirstOrDefault(x => x.Id == id);
+            name = product != null ? product.GiftSetName : "";
+            return name;
         }
     }
 }
