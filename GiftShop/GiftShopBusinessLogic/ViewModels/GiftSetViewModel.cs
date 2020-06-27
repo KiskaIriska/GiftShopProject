@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GiftShopBusinessLogic.Attributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.Serialization;
@@ -7,17 +8,23 @@ using System.Text;
 namespace GiftShopBusinessLogic.ViewModels
 {
     [DataContract]
-    public class GiftSetViewModel
+    public class GiftSetViewModel : BaseViewModel
     {
         [DataMember]
         public int Id { get; set; }
-        [DisplayName("Название подарочного набора")]
+
+        [Column(title: "Название подарочного набора", gridViewAutoSize: GridViewAutoSize.Fill)]
         [DataMember]
         public string GiftSetName { get; set; }
-        [DisplayName("Цена")]
+
+        [Column(title: "Цена", width: 50)]
         [DataMember]
         public decimal Price { get; set; }
         [DataMember]
         public Dictionary<int, (string, int)> GiftSetComponents { get; set; }
-    }
+        public override List<string> Properties() => new List<string>
+        {
+            "GiftSetName",
+            "Price"
+        };    }
 }
