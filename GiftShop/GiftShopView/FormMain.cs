@@ -48,8 +48,8 @@ namespace GiftShopView
                     dataGridView.Columns[0].Visible = false;
                     dataGridView.Columns[1].Visible = false;
                     dataGridView.Columns[2].Visible = false;
-                    dataGridView.Columns[3].Visible = false;
-                    dataGridView.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    dataGridView.Columns[5].Visible = false;
+                    dataGridView.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 }
             }
             catch (Exception ex)
@@ -141,11 +141,18 @@ namespace GiftShopView
         private void запускРаботToolStripMenuItem_Click(object sender, EventArgs e)
         {
             work.DoWork();
+            LoadData();
         }
 
         private void исполнителиToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = Container.Resolve<FormImplementers>();
+            form.ShowDialog();
+        }
+
+        private void сообщенияToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormMessages>();
             form.ShowDialog();
         }
     }

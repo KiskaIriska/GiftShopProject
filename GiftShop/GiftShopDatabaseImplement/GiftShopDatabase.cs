@@ -12,7 +12,7 @@ namespace GiftShopDatabaseImplement
         {
             if (optionsBuilder.IsConfigured == false)
             {
-                optionsBuilder.UseSqlServer(@"Data Source = DESKTOP-8A4H0QT\SQLEXPRESS;Initial Catalog=GiftShopDatabase;
+                optionsBuilder.UseSqlServer(@"Data Source = LAPTOP-11G4UIRG\SQLEXPRESS;Initial Catalog=GiftShopDatabase;
                 Integrated Security=True;MultipleActiveResultSets=True;");
             }
             base.OnConfiguring(optionsBuilder);
@@ -23,6 +23,6 @@ namespace GiftShopDatabaseImplement
         public virtual DbSet<Order> Orders { set; get; }
         public virtual DbSet<Client> Clients { set; get; }
         public virtual DbSet<Implementer> Implementers { set; get; }
-
+        public virtual DbSet<MessageInfo> MessageInfoes { set; get; }
     }
 }

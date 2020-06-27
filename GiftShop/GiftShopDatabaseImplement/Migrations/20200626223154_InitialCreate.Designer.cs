@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GiftShopDatabaseImplement.Migrations
 {
     [DbContext(typeof(GiftShopDatabase))]
-    [Migration("20200510175045_InitialCreate")]
+    [Migration("20200626223154_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.3")
+                .HasAnnotation("ProductVersion", "3.1.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -126,6 +126,33 @@ namespace GiftShopDatabaseImplement.Migrations
                     b.ToTable("Implementers");
                 });
 
+            modelBuilder.Entity("GiftShopDatabaseImplement.Models.MessageInfo", b =>
+                {
+                    b.Property<string>("MessageId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Body")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ClientId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateDelivery")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SenderName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subject")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MessageId");
+
+                    b.HasIndex("ClientId");
+
+                    b.ToTable("MessageInfoes");
+                });
+
             modelBuilder.Entity("GiftShopDatabaseImplement.Models.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -183,10 +210,17 @@ namespace GiftShopDatabaseImplement.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("GiftShopDatabaseImplement.Models.MessageInfo", b =>
+                {
+                    b.HasOne("GiftShopDatabaseImplement.Models.Client", "Client")
+                        .WithMany("MessageInfoes")
+                        .HasForeignKey("ClientId");
+                });
+
             modelBuilder.Entity("GiftShopDatabaseImplement.Models.Order", b =>
                 {
                     b.HasOne("GiftShopDatabaseImplement.Models.Client", "Client")
-                        .WithMany()
+                        .WithMany("Orders")
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

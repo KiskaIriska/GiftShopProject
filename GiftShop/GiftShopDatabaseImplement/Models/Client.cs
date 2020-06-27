@@ -17,5 +17,9 @@ namespace GiftShopDatabaseImplement.Models
         public string Password { get; set; }
         [Required]
         public string Email { get; set; }
+        [ForeignKey("ClientId")]
+        public List<Order> Orders { get; set; }
+        [ForeignKey("ClientId")]
+        public List<MessageInfo> MessageInfoes { get; set; }
     }
 }

@@ -10,29 +10,38 @@ using System.Text;
 
 namespace GiftShopDatabaseImplement.Implements
 {
-    public class ClientLogic  :  IClientLogic
+    public class ClientLogic : IClientLogic
     {
         public void CreateOrUpdate(ClientBindingModel model)
         {
             using (var context = new GiftShopDatabase())
             {
-                Client client;
+                Client element = context.Clients.FirstOrDefault(rec => rec.Email == model.Email && rec.Id != model.Id);
+
+                if (element != null)
+                {
+                    throw new Exception("Уже есть компонент с таким названием");
+                }
+
                 if (model.Id.HasValue)
                 {
-                    client = context.Clients.FirstOrDefault(rec => rec.Id == model.Id);
-                    if (client == null)
+                    element = context.Clients.FirstOrDefault(rec => rec.Id == model.Id);
+
+                    if (element == null)
                     {
                         throw new Exception("Элемент не найден");
                     }
                 }
                 else
                 {
-                    client = new Client();
-                    context.Clients.Add(client);
+                    element = new Client();
+                    context.Clients.Add(element);
                 }
-                client.ClientFIO = model.ClientFIO;
-                client.Email = model.Email;
-                client.Password = model.Password;
+
+                element.Email = model.Email;
+                element.ClientFIO = model.ClientFIO;
+                element.Password = model.Password;
+
                 context.SaveChanges();
             }
         }
@@ -59,22 +68,20 @@ namespace GiftShopDatabaseImplement.Implements
             using (var context = new GiftShopDatabase())
             {
 
-                List<ClientViewModel> clients = context.Clients.Where(
-                         rec => model == null
-                      || rec.Id == model.Id
-                      || rec.Id == model.Id
-                       || rec.Email == model.Email && rec.Password == model.Password
-                    ).Select(rec => new ClientViewModel
-                    {
-                        Id = rec.Id,
-                        ClientFIO = rec.ClientFIO,
-                        Email = rec.Email,
-                        Password = rec.Password
-                    })
-                    .ToList();
-                if (clients.Count > 0)
-                    return clients;
-                return null;
+                return context.Clients
+                 .Where(
+                     rec => model == null
+                     || rec.Id == model.Id
+                     || rec.Email == model.Email && rec.Password == model.Password
+                 )
+                 .Select(rec => new ClientViewModel
+                 {
+                     Id = rec.Id,
+                     ClientFIO = rec.ClientFIO,
+                     Email = rec.Email,
+                     Password = rec.Password
+                 })
+                 .ToList();
             }
         }
     }

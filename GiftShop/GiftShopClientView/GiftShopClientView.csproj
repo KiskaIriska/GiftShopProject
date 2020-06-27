@@ -69,6 +69,12 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormMessages.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMessages.Designer.cs">
+      <DependentUpon>FormMessages.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormRegister.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -113,6 +119,10 @@
     <ProjectReference Include="..\GiftShopBusinessLogic\GiftShopBusinessLogic.csproj">
       <Project>{41d7e17f-f362-4dd6-a09e-09cb15492fca}</Project>
       <Name>GiftShopBusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GiftShopDatabaseImplement\GiftShopDatabaseImplement.csproj">
+      <Project>{2dfc4d5c-27b4-4407-9de6-bc2975a40a29}</Project>
+      <Name>GiftShopDatabaseImplement</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
