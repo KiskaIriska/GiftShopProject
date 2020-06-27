@@ -1,4 +1,4 @@
-﻿using GiftShopBusinessLogic.BingingModels;
+using GiftShopBusinessLogic.BingingModels;
 using GiftShopBusinessLogic.Enums;
 using GiftShopBusinessLogic.Interfaces;
 using GiftShopBusinessLogic.ViewModels;
@@ -124,5 +124,6 @@ namespace GiftShopListImplement.Implements
                 DateImplement = order.DateImplement
             };
         }
-    }
+    }
+
 }

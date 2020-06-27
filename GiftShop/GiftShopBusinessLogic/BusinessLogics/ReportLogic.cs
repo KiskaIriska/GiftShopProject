@@ -15,11 +15,11 @@ namespace GiftShopBusinessLogic.BusinessLogics
         private readonly IGiftSetLogic productLogic;
         private readonly IOrderLogic orderLogic;
         public ReportLogic(IGiftSetLogic productLogic, IComponentLogic componentLogic,
-       IOrderLogic orderLLogic)
+       IOrderLogic orderLogic)
         {
             this.productLogic = productLogic;
             this.componentLogic = componentLogic;
-            this.orderLogic = orderLLogic;
+            this.orderLogic = orderLogic;
         }
         /// <summary>
         /// Получение списка компонент с указанием, в каких изделиях используются
@@ -27,25 +27,21 @@ namespace GiftShopBusinessLogic.BusinessLogics
         /// <returns></returns>
         public List<ReportGiftSetComponentViewModel> GetGiftSetComponent()
         {
-            var components = componentLogic.Read(null);
             var products = productLogic.Read(null);
             var list = new List<ReportGiftSetComponentViewModel>();
 
             foreach (var product in products)
             {
-                foreach (var component in components)
+                foreach (var pc in product.GiftSetComponents)
                 {
-                    if (product.GiftSetComponents.ContainsKey(component.Id))
+                    var record = new ReportGiftSetComponentViewModel
                     {
-                        var record = new ReportGiftSetComponentViewModel
-                        {
-                            GiftSetName = product.GiftSetName,
-                            ComponentName = component.ComponentName,
-                            Count = product.GiftSetComponents[component.Id].Item2
-                        };
+                        GiftSetName = product.GiftSetName,
+                        ComponentName = pc.Value.Item1,
+                        Count = pc.Value.Item2
+                    };
 
-                        list.Add(record);
-                    }
+                    list.Add(record);
                 }
             }
             return list;
@@ -55,22 +51,19 @@ namespace GiftShopBusinessLogic.BusinessLogics
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public List<ReportOrdersViewModel> GetOrders(ReportBindingModel model)
+        public List<IGrouping<DateTime, OrderViewModel>> GetOrders(ReportBindingModel model)
         {
-            return orderLogic.Read(new OrderBindingModel
+            var list = orderLogic
+            .Read(new OrderBindingModel
             {
                 DateFrom = model.DateFrom,
                 DateTo = model.DateTo
             })
-            .Select(x => new ReportOrdersViewModel
-            {
-                DateCreate = x.DateCreate,
-                GiftSetName = x.GiftSetName,
-                Count = x.Count,
-                Sum = x.Sum,
-                Status = x.Status
-            })
+            .GroupBy(rec => rec.DateCreate.Date)
+            .OrderBy(recG => recG.Key)
             .ToList();
+
+            return list;
         }
         /// <summary>
         /// Сохранение изделий в файл-Word
@@ -104,8 +97,6 @@ namespace GiftShopBusinessLogic.BusinessLogics
         /// <param name="model"></param>
         public void SaveOrdersToExcelFile(ReportBindingModel model)
         {
-            var a = GetOrders(model);
-
             SaveToExcel.CreateDoc(new ExcelInfo
             {
                 FileName = model.FileName,
