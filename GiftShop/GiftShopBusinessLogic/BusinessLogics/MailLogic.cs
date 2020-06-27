@@ -60,7 +60,7 @@ namespace GiftShopBusinessLogic.BusinessLogics
                         objSmtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
                         objSmtpClient.Credentials = new NetworkCredential(mailLogin,
                         mailPassword);
-                        await Task.Run(() => objSmtpClient.SendMailAsync(objMailMessage));
+                        objSmtpClient.Send(objMailMessage);
                     }
                     catch (Exception)
                     {

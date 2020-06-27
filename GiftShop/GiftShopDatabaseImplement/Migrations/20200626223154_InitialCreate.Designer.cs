@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GiftShopDatabaseImplement.Migrations
 {
     [DbContext(typeof(GiftShopDatabase))]
-    [Migration("20200526071929_InitialCreate")]
+    [Migration("20200626223154_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
