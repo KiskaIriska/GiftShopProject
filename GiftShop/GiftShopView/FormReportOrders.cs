@@ -36,26 +36,18 @@ namespace GiftShopView
             try
             {
                 var dict = logic.GetOrders(new ReportBindingModel { DateFrom = dateTimePickerFrom.Value.Date, DateTo = dateTimePickerTo.Value.Date });
-                List<DateTime> dates = new List<DateTime>();
-                foreach (var order in dict)
-                {
-                    if (!dates.Contains(order.DateCreate.Date))
-                    {
-                        dates.Add(order.DateCreate.Date);
-                    }
-                }
 
                 if (dict != null)
                 {
                     dataGridView.Rows.Clear();
 
-                    foreach (var date in dates)
+                    foreach (var date in dict)
                     {
                         decimal dateSum = 0;
 
-                        dataGridView.Rows.Add(new object[] { date.Date, "", "" });
+                        dataGridView.Rows.Add(new object[] { date.Key, "", "" });
 
-                        foreach (var order in dict.Where(rec => rec.DateCreate.Date == date.Date))
+                        foreach (var order in date)
                         {
                             dataGridView.Rows.Add(new object[] { "", order.GiftSetName, order.Sum });
                             dateSum += order.Sum;
@@ -87,7 +79,11 @@ namespace GiftShopView
                 {
                     try
                     {
-                        logic.SaveOrdersToExcelFile(new ReportBindingModel { FileName = dialog.FileName, DateFrom = dateTimePickerFrom.Value.Date, DateTo = dateTimePickerTo.Value.Date });
+                        logic.SaveOrdersToExcelFile(new ReportBindingModel {
+                            FileName = dialog.FileName,
+                            DateFrom = dateTimePickerFrom.Value.Date,
+                            DateTo = dateTimePickerTo.Value.Date
+                        });
 
                         MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
                         MessageBoxIcon.Information);
