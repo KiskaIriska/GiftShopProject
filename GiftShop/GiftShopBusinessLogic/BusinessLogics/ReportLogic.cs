@@ -27,26 +27,21 @@ namespace GiftShopBusinessLogic.BusinessLogics
         /// <returns></returns>
         public List<ReportGiftSetComponentViewModel> GetGiftSetComponent()
         {
-            var components = componentLogic.Read(null);
             var products = productLogic.Read(null);
             var list = new List<ReportGiftSetComponentViewModel>();
 
             foreach (var product in products)
             {
-                foreach (var component in components)
+                foreach (var gc in product.GiftSetComponents)
                 {
-                    if (product.GiftSetComponents.ContainsKey(component.Id))
-                    {
                         var record = new ReportGiftSetComponentViewModel
                         {
                             GiftSetName = product.GiftSetName,
-                            ComponentName = component.ComponentName,
-                            Count = product.GiftSetComponents[component.Id].Item2
+                            ComponentName = gc.Value.Item1,
+                            Count = gc.Value.Item2,
                         };
-
                         list.Add(record);
                     }
-                }
             }
             return list;
         }
@@ -55,22 +50,19 @@ namespace GiftShopBusinessLogic.BusinessLogics
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public List<ReportOrdersViewModel> GetOrders(ReportBindingModel model)
+        public List<IGrouping<DateTime, OrderViewModel>> GetOrders(ReportBindingModel model)
         {
-            return orderLogic.Read(new OrderBindingModel
-            {
-                DateFrom = model.DateFrom,
-                DateTo = model.DateTo
-            })
-            .Select(x => new ReportOrdersViewModel
-            {
-                DateCreate = x.DateCreate,
-                GiftSetName = x.GiftSetName,
-                Count = x.Count,
-                Sum = x.Sum,
-                Status = x.Status
-            })
-            .ToList();
+            var list = orderLogic
+             .Read(new OrderBindingModel
+             {
+                 DateFrom = model.DateFrom,
+                 DateTo = model.DateTo
+             })
+             .GroupBy(rec => rec.DateCreate.Date)
+             .OrderBy(recG => recG.Key)
+             .ToList();
+
+            return list;
         }
         /// <summary>
         /// Сохранение изделий в файл-Word

@@ -76,7 +76,7 @@ namespace GiftShopFileImplement.Implements
                 GiftSetId = rec.GiftSetId,
                 ClientFIO = source.Clients.FirstOrDefault(recC => recC.Id == rec.ClientId)?.ClientFIO,
                 ImplementerFIO = source.Implementers.FirstOrDefault(recC => recC.Id == rec.ImplementerId)?.ImplementerFIO,
-                GiftSetName = source.GiftSets.FirstOrDefault(recP => recP.Id == rec.GiftSetId)?.GiftSetName,
+                GiftSetName = GetGiftSetName(rec.GiftSetId),
                 Count = rec.Count,
                 Sum = rec.Sum,
                 Status = rec.Status,
@@ -84,6 +84,13 @@ namespace GiftShopFileImplement.Implements
                 DateImplement = rec.DateImplement
             })
             .ToList();
+        }
+        private string GetGiftSetName(int id)
+        {
+            string name = "";
+            var GiftSet = source.GiftSets.FirstOrDefault(x => x.Id == id);
+            name = GiftSet != null ? GiftSet.GiftSetName : "";
+            return name;
         }
     }
 }

@@ -64,31 +64,20 @@ namespace GiftShopBusinessLogic.BusinessLogics
                 });
                 uint rowIndex = 2;
 
-                List<DateTime> dates = new List<DateTime>();
-                foreach (var order in info.Orders)
+                foreach (var date in info.Orders)
                 {
-                    if (!dates.Contains(order.DateCreate.Date))
-                    {
-                        dates.Add(order.DateCreate.Date);
-                    }
-                }
-                foreach (var date in dates)
-                {
-                    decimal dateSum = 0;
-
+                    decimal sum = 0;
                     InsertCellInWorksheet(new ExcelCellParameters
                     {
                         Worksheet = worksheetPart.Worksheet,
                         ShareStringPart = shareStringPart,
                         ColumnName = "A",
                         RowIndex = rowIndex,
-                        Text = date.Date.ToString(),
+                        Text = date.Key.ToShortDateString(),
                         StyleIndex = 0U
                     });
-
                     rowIndex++;
-
-                    foreach (var order in info.Orders.Where(rec => rec.DateCreate.Date == date.Date))
+                    foreach (var order in date)
                     {
                         InsertCellInWorksheet(new ExcelCellParameters
                         {
@@ -99,7 +88,6 @@ namespace GiftShopBusinessLogic.BusinessLogics
                             Text = order.GiftSetName,
                             StyleIndex = 1U
                         });
-
                         InsertCellInWorksheet(new ExcelCellParameters
                         {
                             Worksheet = worksheetPart.Worksheet,
@@ -109,12 +97,9 @@ namespace GiftShopBusinessLogic.BusinessLogics
                             Text = order.Sum.ToString(),
                             StyleIndex = 1U
                         });
-
-                        dateSum += order.Sum;
-
+                        sum += order.Sum;
                         rowIndex++;
                     }
-
                     InsertCellInWorksheet(new ExcelCellParameters
                     {
                         Worksheet = worksheetPart.Worksheet,
@@ -124,23 +109,19 @@ namespace GiftShopBusinessLogic.BusinessLogics
                         Text = "Итого",
                         StyleIndex = 0U
                     });
-
                     InsertCellInWorksheet(new ExcelCellParameters
                     {
                         Worksheet = worksheetPart.Worksheet,
                         ShareStringPart = shareStringPart,
                         ColumnName = "C",
                         RowIndex = rowIndex,
-                        Text = dateSum.ToString(),
+                        Text = sum.ToString(),
                         StyleIndex = 0U
                     });
-
                     rowIndex++;
                 }
-
                 workbookpart.Workbook.Save();
             }
-
         }
         /// <summary>
         /// Настройка стилей для файла

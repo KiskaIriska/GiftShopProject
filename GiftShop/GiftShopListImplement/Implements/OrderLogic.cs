@@ -2,6 +2,7 @@
 using GiftShopBusinessLogic.Enums;
 using GiftShopBusinessLogic.Interfaces;
 using GiftShopBusinessLogic.ViewModels;
+using GiftShopListImplement.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,7 +18,9 @@ namespace GiftShopListImplement.Implements
         }
         public void CreateOrUpdate(OrderBindingModel model)
         {
-            Order tempOrder = model.Id.HasValue ? null : new Order { Id = 1 };
+            Order tempOrder = model.Id.HasValue ? null : new Order { 
+                Id = 1 
+            };
 
             foreach (var order in source.Orders)
             {
@@ -62,14 +65,45 @@ namespace GiftShopListImplement.Implements
 
         private Order CreateModel(OrderBindingModel model, Order order)
         {
+            GiftSet GiftSet = null;
+            foreach (GiftSet s in source.GiftSets)
+            {
+                if (s.Id == model.GiftSetId)
+                {
+                    GiftSet = s;
+                    break;
+                }
+            }
+            Client client = null;
+            foreach (Client c in source.Clients)
+            {
+                if (c.Id == model.ClientId)
+                {
+                    client = c;
+                    break;
+                }
+            }
+            Implementer implementer = null;
+            foreach (Implementer i in source.Implementers)
+            {
+                if (i.Id == model.ImplementerId)
+                {
+                    implementer = i;
+                    break;
+                }
+            }
+            if (GiftSet == null || client == null || model.ImplementerId.HasValue && implementer == null)
+            {
+                throw new Exception("Элемент не найден");
+            }
             order.GiftSetId = model.GiftSetId;
+            order.ClientId = model.ClientId.Value;
+            order.ImplementerId = (int)model.ImplementerId;
             order.Count = model.Count;
-            order.ClientId = (int)model.ClientId;
+            order.Sum = model.Count * GiftSet.Price;
+            order.Status = model.Status;
             order.DateCreate = model.DateCreate;
             order.DateImplement = model.DateImplement;
-            order.Sum = model.Sum;
-            order.Status = model.Status;
-
             return order;
         }
 
@@ -96,17 +130,34 @@ namespace GiftShopListImplement.Implements
 
         private OrderViewModel CreateViewModel(Order order)
         {
-            string productName = null;
-
-            foreach (var product in source.GiftSets)
+            GiftSet GiftSet = null;
+            foreach (GiftSet s in source.GiftSets)
             {
-                if (product.Id == order.GiftSetId)
+                if (s.Id == order.GiftSetId)
                 {
-                    productName = product.GiftSetName;
+                    GiftSet = s;
+                    break;
                 }
             }
-
-            if (productName == null)
+            Client client = null;
+            foreach (Client c in source.Clients)
+            {
+                if (c.Id == order.ClientId)
+                {
+                    client = c;
+                    break;
+                }
+            }
+            Implementer implementer = null;
+            foreach (Implementer i in source.Implementers)
+            {
+                if (i.Id == order.ImplementerId)
+                {
+                    implementer = i;
+                    break;
+                }
+            }
+            if (GiftSet == null || client == null || order.ImplementerId.HasValue && implementer == null)
             {
                 throw new Exception("Подарочный набор не найден");
             }
@@ -114,9 +165,12 @@ namespace GiftShopListImplement.Implements
             return new OrderViewModel
             {
                 Id = order.Id,
-                ClientId = order.ClientId,
                 GiftSetId = order.GiftSetId,
-                GiftSetName = productName,
+                GiftSetName = GiftSet.GiftSetName,
+                ClientId = order.ClientId,
+                ClientFIO = client.ClientFIO,
+                ImplementerId = order.ImplementerId,
+                ImplementerFIO = implementer.ImplementerFIO,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = order.Status,

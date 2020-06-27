@@ -67,7 +67,6 @@ namespace GiftShopDatabaseImplement.Implements
         {
             using (var context = new GiftShopDatabase())
             {
-
                 return context.Clients
                  .Where(
                      rec => model == null

@@ -19,7 +19,6 @@ namespace GiftShopBusinessLogic.BusinessLogics
             paragraph.Format.SpaceAfter = "1cm";
             paragraph.Format.Alignment = ParagraphAlignment.Center;
             paragraph.Style = "NormalTitle";
-            
             var table = document.LastSection.AddTable();
             List<string> columns = new List<string> { "8cm", "6cm", "3cm"};
             foreach (var elem in columns)
