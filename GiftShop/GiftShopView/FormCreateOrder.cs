@@ -21,25 +21,44 @@ namespace GiftShopView
         public new IUnityContainer Container { get; set; }
         private readonly IGiftSetLogic logicP;
         private readonly MainLogic logicM;
+        private readonly IClientLogic logicC;
 
-        public FormCreateOrder(IGiftSetLogic logicP, MainLogic logicM)
+        public FormCreateOrder(IGiftSetLogic logicP, MainLogic logicM, IClientLogic logicC)
         {
             InitializeComponent();
             this.logicP = logicP;
             this.logicM = logicM;
+            this.logicC = logicC;
         }
         private void FormCreateOrder_Load(object sender, EventArgs e)
         {
             try
             {
-                var list = logicP.Read(null);
-                comboBoxGiftSet.DataSource = list;
-                comboBoxGiftSet.DisplayMember = "GiftSetName";
-                comboBoxGiftSet.ValueMember = "Id";
+                var listP = logicP.Read(null);
+
+                if (listP != null)
+
+                {
+
+                    comboBoxGiftSet.DisplayMember = "GiftSetName";
+                    comboBoxGiftSet.ValueMember = "Id";
+                    comboBoxGiftSet.DataSource = listP;
+                    comboBoxGiftSet.SelectedItem = null;
+                }
+                var listC = logicC.Read(null);
+
+                if (listC != null)
+                {
+                    comboBoxClient.DisplayMember = "ClientFIO";
+                    comboBoxClient.ValueMember = "Id";
+                    comboBoxClient.DataSource = listC;
+                    comboBoxClient.SelectedItem = null;
+
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
+               MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
                MessageBoxIcon.Error);
             }
         }
@@ -87,11 +106,18 @@ namespace GiftShopView
                MessageBoxIcon.Error);
                 return;
             }
+            if (comboBoxClient.SelectedValue == null)
+            {
+                MessageBox.Show("Выберите клиента", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+
+            }
             try
             {
                 logicM.CreateOrder(new CreateOrderBindingModel
                 {
                     GiftSetId = Convert.ToInt32(comboBoxGiftSet.SelectedValue),
+                    ClientId = Convert.ToInt32(comboBoxClient.SelectedValue),
                     Count = Convert.ToInt32(textBoxCount.Text),
                     Sum = Convert.ToDecimal(textBoxSum.Text)
                 });
@@ -111,5 +137,7 @@ namespace GiftShopView
             DialogResult = DialogResult.Cancel;
             Close();
         }
+
+        
     }
 }

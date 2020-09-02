@@ -33,6 +33,7 @@ namespace GiftShopDatabaseImplement.Implements
                     context.Orders.Add(element);
                 }
                 element.GiftSetId = model.GiftSetId == 0 ? element.GiftSetId : model.GiftSetId;
+                element.ClientId = model.ClientId == null ? element.ClientId : (int)model.ClientId;
                 element.Count = model.Count;
                 element.Sum = model.Sum;
                 element.Status = model.Status;
@@ -60,26 +61,30 @@ model.Id);
             }
         }
 
+
         public List<OrderViewModel> Read(OrderBindingModel model)
         {
-            using (var context = new GiftShopDatabase())
+            using (var source = new GiftShopDatabase())
             {
-                return context.Orders
-                .Where(rec => model == null || (rec.Id == model.Id &&
-               model.Id.HasValue) ||
-                (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate
-               >= model.DateFrom && rec.DateCreate <= model.DateTo))
+                return source.Orders.Where(
+                rec => model == null ||
+                (rec.Id == model.Id && model.Id.HasValue) ||
+                (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo) ||
+                (model.ClientId.HasValue && rec.ClientId == model.ClientId)).Include(rec => rec.GiftSet)
+                .Include(rec => rec.Client)
                 .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
                     GiftSetId = rec.GiftSetId,
+                    ClientId = rec.ClientId,
                     DateCreate = rec.DateCreate,
                     DateImplement = rec.DateImplement,
                     Status = rec.Status,
                     Count = rec.Count,
                     Sum = rec.Sum,
+                    ClientFIO = rec.Client.ClientFIO,
                     GiftSetName = rec.GiftSet.GiftSetName
-                })
+                     })
                .ToList();
             }
         }

@@ -64,6 +64,7 @@ namespace GiftShopListImplement.Implements
         {
             order.GiftSetId = model.GiftSetId;
             order.Count = model.Count;
+            order.ClientId = (int)model.ClientId;
             order.DateCreate = model.DateCreate;
             order.DateImplement = model.DateImplement;
             order.Sum = model.Sum;
@@ -75,11 +76,8 @@ namespace GiftShopListImplement.Implements
         public List<OrderViewModel> Read(OrderBindingModel model)
         {
             List<OrderViewModel> result = new List<OrderViewModel>();
-
             foreach (var order in source.Orders)
             {
-                if (model != null)
-                {
                     if (model != null && order.Id == model.Id
                    || model.DateFrom.HasValue && model.DateTo.HasValue && order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo)
                     {
@@ -89,10 +87,8 @@ namespace GiftShopListImplement.Implements
 
                     continue;
                 }
-
                 result.Add(CreateViewModel(order));
             }
-
             return result;
         }
 
@@ -116,6 +112,7 @@ namespace GiftShopListImplement.Implements
             return new OrderViewModel
             {
                 Id = order.Id,
+                ClientId = order.ClientId,
                 GiftSetId = order.GiftSetId,
                 GiftSetName = productName,
                 Count = order.Count,
@@ -125,5 +122,6 @@ namespace GiftShopListImplement.Implements
                 DateImplement = order.DateImplement
             };
         }
-    }
+    }
+
 }

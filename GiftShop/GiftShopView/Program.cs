@@ -27,15 +27,12 @@ namespace GiftShopView
         private static IUnityContainer BuildUnityContainer()
         {
             var currentContainer = new UnityContainer();
-            currentContainer.RegisterType<IComponentLogic, ComponentLogic>(new
-           HierarchicalLifetimeManager());
-            currentContainer.RegisterType<IOrderLogic, OrderLogic>(new
-           HierarchicalLifetimeManager());
-            currentContainer.RegisterType<IGiftSetLogic, GiftSetLogic>(new
-           HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IComponentLogic, ComponentLogic>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IOrderLogic, OrderLogic>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IClientLogic, ClientLogic>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IGiftSetLogic, GiftSetLogic>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<MainLogic>(new HierarchicalLifetimeManager());
-            currentContainer.RegisterType<ReportLogic>(new
-           HierarchicalLifetimeManager());
+            currentContainer.RegisterType<ReportLogic>(new HierarchicalLifetimeManager());
             return currentContainer;
         }
     }
