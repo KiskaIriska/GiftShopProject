@@ -1,4 +1,4 @@
-﻿using GiftShopBusinessLogic.BingingModels;
+using GiftShopBusinessLogic.BingingModels;
 using GiftShopBusinessLogic.Enums;
 using GiftShopBusinessLogic.Interfaces;
 using GiftShopBusinessLogic.ViewModels;
@@ -78,14 +78,16 @@ namespace GiftShopListImplement.Implements
             List<OrderViewModel> result = new List<OrderViewModel>();
             foreach (var order in source.Orders)
             {
-                    if (model != null && order.Id == model.Id
-                   || model.DateFrom.HasValue && model.DateTo.HasValue && order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo)
-                    {
-                        result.Add(CreateViewModel(order));
-                        break;
-                    }
-
-                    continue;
+                if (
+                    model != null && order.Id == model.Id
+                    || model.DateFrom.HasValue && model.DateTo.HasValue && order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo
+                    || model.ClientId.HasValue && order.ClientId == model.ClientId
+                    || model.FreeOrders.HasValue && model.FreeOrders.Value
+                    || model.ImplementerId.HasValue && order.ImplementerId == model.ImplementerId && order.Status == OrderStatus.Выполняется
+                )
+                {
+                    result.Add(CreateViewModel(order));
+                    break;
                 }
                 result.Add(CreateViewModel(order));
             }

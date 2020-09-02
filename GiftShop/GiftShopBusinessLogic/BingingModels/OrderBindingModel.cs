@@ -11,6 +11,7 @@ namespace GiftShopBusinessLogic.BingingModels
     {
         public int? Id { get; set; }
         public int? ClientId { get; set; }
+        public int? ImplementerId { get; set; }
         public int GiftSetId { get; set; }
         public int Count { get; set; }
         public decimal Sum { get; set; }
@@ -19,5 +20,7 @@ namespace GiftShopBusinessLogic.BingingModels
         public DateTime? DateImplement { get; set; }
         public DateTime? DateFrom { get; set; }
         public DateTime? DateTo { get; set; }
+        public bool? FreeOrders { get; set; }
+
     }
 }

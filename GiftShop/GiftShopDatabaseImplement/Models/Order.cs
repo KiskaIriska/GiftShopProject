@@ -18,6 +18,8 @@ namespace GiftShopDatabaseImplement.Models
 
         public int ClientId { get; set; }
 
+        public int? ImplementerId { get; set; }
+
         [Required]
         public int Count { get; set; }
   
@@ -36,5 +38,7 @@ namespace GiftShopDatabaseImplement.Models
         public virtual GiftSet GiftSet { get; set; }
 
         public virtual Client Client { get; set; }
+
+        public Implementer Implementer { get; set; }
     }
 }
