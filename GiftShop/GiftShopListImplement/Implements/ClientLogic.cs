@@ -20,17 +20,23 @@ namespace GiftShopListImplement.Implements
 
         public void CreateOrUpdate(ClientBindingModel model)
         {
-            Client tempClient = model.Id.HasValue ? null : new Client { Id = 1 };
-            foreach (var client in source.Clients)
+            Client tempClient = model.Id.HasValue ? null : new Client
             {
-                if (!model.Id.HasValue && client.Id >= tempClient.Id)
+                Id = 1
+            };
+            foreach (var Client in source.Clients)
+            {
+                if (Client.Email == model.Email && Client.Id != model.Id)
                 {
-                   tempClient.Id = tempClient.Id + 1;
+                    throw new Exception("Уже есть клиент с таким логином");
                 }
-
-                else if (model.Id.HasValue && client.Id == model.Id)
+                if (!model.Id.HasValue && Client.Id >= tempClient.Id)
                 {
-                    tempClient = client;
+                    tempClient.Id = Client.Id + 1;
+                }
+                else if (model.Id.HasValue && Client.Id == model.Id)
+                {
+                    tempClient = Client;
                 }
             }
             if (model.Id.HasValue)
@@ -39,12 +45,13 @@ namespace GiftShopListImplement.Implements
                 {
                     throw new Exception("Элемент не найден");
                 }
-               CreateModel(model, tempClient);
+                CreateModel(model, tempClient);
             }
             else
             {
                 source.Clients.Add(CreateModel(model, tempClient));
             }
+
         }
 
         public void Delete(ClientBindingModel model)
