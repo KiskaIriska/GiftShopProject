@@ -15,17 +15,36 @@ namespace GiftShopDatabaseImplement.Implements
         {
             using (var context = new GiftShopDatabase())
             {
-                Implementer element = context.Implementers.FirstOrDefault(rec => rec.Id == model.Id);
-
-                if (element == null)
+                Implementer element = context.Implementers.FirstOrDefault(rec => rec.ImplementerFIO == model.ImplementerFIO && rec.Id == model.Id);
+                if (element != null)
                 {
-                    element = new Implementer();
+                    throw new Exception("Уже есть исполнитель с таким именем");
+                }
+                if (model.Id.HasValue)
+                {
+                    element = context.Implementers.FirstOrDefault(rec => rec.Id == model.Id);
+
+                    if (element == null)
+                    {
+                        throw new Exception("Элемент не найден");
+                    }
+                    else
+                    {
+                        element.ImplementerFIO = model.ImplementerFIO;
+                        element.PauseTime = model.PauseTime;
+                        element.WorkingTime = model.WorkingTime;
+                    }
+                }
+                else
+                {
+                    element = new Implementer
+                    {
+                        ImplementerFIO = model.ImplementerFIO,
+                        PauseTime = model.PauseTime,
+                        WorkingTime = model.WorkingTime
+                    };
                     context.Implementers.Add(element);
                 }
-
-                element.ImplementerFIO = model.ImplementerFIO;
-                element.WorkingTime = model.WorkingTime;
-                element.PauseTime = model.PauseTime;
 
                 context.SaveChanges();
             }

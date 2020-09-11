@@ -20,18 +20,36 @@ namespace GiftShopFileImplement.Implements
 
         public void CreateOrUpdate(ImplementerBindingModel model)
         {
-            Implementer element = source.Implementers.FirstOrDefault(rec => rec.Id == model.Id);
-
-            if (element == null)
+            Implementer element = source.Implementers.FirstOrDefault(c => c.ImplementerFIO == model.ImplementerFIO && c.Id != model.Id);
+            if (element != null)
             {
-                int maxId = source.Implementers.Count > 0 ? source.Implementers.Max(rec => rec.Id) : 0;
-                element = new Implementer { Id = maxId + 1 };
+                throw new Exception("Уже есть исполнитель с таким именем");
+            }
+            if (model.Id.HasValue)
+            {
+                element = source.Implementers.FirstOrDefault(rec => rec.Id == model.Id);
+
+                if (element == null)
+                {
+                    throw new Exception("Элемент не найден");
+                }
+                else
+                {
+                    element.ImplementerFIO = model.ImplementerFIO;
+                    element.PauseTime = model.PauseTime;
+                    element.WorkingTime = model.WorkingTime;
+                }
+            }
+            else
+            {
+                element = new Implementer
+                {
+                    ImplementerFIO = model.ImplementerFIO,
+                    PauseTime = model.PauseTime,
+                    WorkingTime = model.WorkingTime
+                };
                 source.Implementers.Add(element);
             }
-
-            element.ImplementerFIO = model.ImplementerFIO;
-            element.WorkingTime = model.WorkingTime;
-            element.PauseTime = model.PauseTime;
         }
 
         public void Delete(ImplementerBindingModel model)

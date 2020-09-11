@@ -61,7 +61,8 @@ namespace GiftShopView
                 {
                     LoadData();
                 }
-            }
+            }
+
         }
 
         private void ButtonDel_Click(object sender, EventArgs e)
